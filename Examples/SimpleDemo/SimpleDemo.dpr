@@ -82,7 +82,7 @@ begin
     finally
       Formatter.Free;
     end;
-    readln;
+
   except
     on E: Exception do
       Writeln(E.ClassName, ': ', E.Message);
