@@ -1258,6 +1258,22 @@ function ZydisMnemonicGetStaticString(Mnemonic: TZydisMnemonic): PZydisStaticStr
   name ZYDIS_SYMBOL_PREFIX + 'ZydisMnemonicGetStaticString';
 
 {* ---------------------------------------------------------------------------------------------- *}
+{* MetaInfo                                                                                       *}
+{* ---------------------------------------------------------------------------------------------- *}
+
+function ZydisCategoryGetString(Category: TZydisInstructionCategory): PAnsiChar; cdecl;
+  external {$IFDEF ZYDIS_DYNAMIC_LINK}ZYDIS_LIBRARY_NAME{$ENDIF}
+  name ZYDIS_SYMBOL_PREFIX + 'ZydisCategoryGetString';
+
+function ZydisISASetGetString(ISASet: TZydisISASet): PAnsiChar; cdecl;
+  external {$IFDEF ZYDIS_DYNAMIC_LINK}ZYDIS_LIBRARY_NAME{$ENDIF}
+  name ZYDIS_SYMBOL_PREFIX + 'ZydisISASetGetString';
+
+function ZydisISAExtGetString(ISAExt: TZydisISAExt): PAnsiChar; cdecl;
+  external {$IFDEF ZYDIS_DYNAMIC_LINK}ZYDIS_LIBRARY_NAME{$ENDIF}
+  name ZYDIS_SYMBOL_PREFIX + 'ZydisISAExtGetString';
+
+{* ---------------------------------------------------------------------------------------------- *}
 {* Decoder                                                                                        *}
 {* ---------------------------------------------------------------------------------------------- *}
 
@@ -1380,6 +1396,16 @@ type
 
 type
   TZydisMnemonicHelper = record helper for TZydisMnemonic
+  public
+    function ToString: String; inline;
+  end;
+
+{* ---------------------------------------------------------------------------------------------- *}
+{* ZydisRegister                                                                                  *}
+{* ---------------------------------------------------------------------------------------------- *}
+
+type
+  TZydisRegisterHelper = record helper for TZydisRegister
   public
     function ToString: String; inline;
   end;
@@ -1602,6 +1628,22 @@ end;
 function TZydisStringHelper.Init(const Text: PAnsiChar): TZydisStatus;
 begin
   Result := ZydisStringInit(Self, Text);
+end;
+
+{* ---------------------------------------------------------------------------------------------- *}
+{* ZydisRegister                                                                                  *}
+{* ---------------------------------------------------------------------------------------------- *}
+
+function TZydisRegisterHelper.ToString: String;
+var
+  S: PAnsiChar;
+begin
+  Result := '';
+  S := ZydisRegisterGetString(Self);
+  if Assigned(S) then
+  begin
+    Result := String(AnsiString(S));
+  end;
 end;
 
 {* ---------------------------------------------------------------------------------------------- *}
