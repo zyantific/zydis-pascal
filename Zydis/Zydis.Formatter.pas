@@ -156,9 +156,8 @@ type
       var Str: TZydisString; const Instruction: TZydisDecodedInstruction;
       const Operand: TZydisDecodedOperand; Decorator: TZydisDecoratorType): TZydisStatus; virtual;
   public
-    function FormatInstruction(const Instruction: TZydisDecodedInstruction): String; inline;
-    function FormatOperand(const Instruction: TZydisDecodedInstruction;
-      Index: ZydisU8): String; inline;
+    function FormatInstruction(const Instruction: TZydisDecodedInstruction): String;
+    function FormatOperand(const Instruction: TZydisDecodedInstruction; Index: ZydisU8): String;
   public
     constructor Create(Style: TZydisFormatterStyle);
   public

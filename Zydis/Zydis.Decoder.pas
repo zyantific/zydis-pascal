@@ -32,7 +32,7 @@ uses
   System.SysUtils, Zydis, Zydis.Exception;
 
 type
-  TZydisDecoder = class(TObject)
+  TZydisDecoder = class sealed(TObject)
   strict private
     FContext: Zydis.TZydisDecoder;
   public

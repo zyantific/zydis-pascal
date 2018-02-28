@@ -32,10 +32,10 @@ program CustomFormatter;
 
 uses
   System.SysUtils,
-  Zydis in '..\..\Zydis\Zydis.pas',
-  Zydis.Exception in '..\..\Zydis\Zydis.Exception.pas',
-  Zydis.Decoder in '..\..\Zydis\Zydis.Decoder.pas',
-  Zydis.Formatter in '..\..\Zydis\Zydis.Formatter.pas';
+  Zydis in '..\Zydis\Zydis.pas',
+  Zydis.Exception in '..\Zydis\Zydis.Exception.pas',
+  Zydis.Decoder in '..\Zydis\Zydis.Decoder.pas',
+  Zydis.Formatter in '..\Zydis\Zydis.Formatter.pas';
 
 {* ============================================================================================== *}
 {* Formatter                                                                                      *}

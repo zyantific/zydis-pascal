@@ -1,0 +1,41 @@
+﻿<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <PropertyGroup>
+        <ProjectGuid>{D2FEAC7B-BA6A-4F35-B075-A47A8CB9AE80}</ProjectGuid>
+    </PropertyGroup>
+    <ItemGroup>
+        <Projects Include="CustomFormatter.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="SimpleDemo.dproj">
+            <Dependencies/>
+        </Projects>
+    </ItemGroup>
+    <Target Name="CustomFormatter">
+        <MSBuild Projects="CustomFormatter.dproj"/>
+    </Target>
+    <Target Name="CustomFormatter:Clean">
+        <MSBuild Projects="CustomFormatter.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="CustomFormatter:Make">
+        <MSBuild Projects="CustomFormatter.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="SimpleDemo">
+        <MSBuild Projects="SimpleDemo.dproj"/>
+    </Target>
+    <Target Name="SimpleDemo:Clean">
+        <MSBuild Projects="SimpleDemo.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="SimpleDemo:Make">
+        <MSBuild Projects="SimpleDemo.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="Build">
+        <CallTarget Targets="CustomFormatter;SimpleDemo"/>
+    </Target>
+    <Target Name="Clean">
+        <CallTarget Targets="CustomFormatter:Clean;SimpleDemo:Clean"/>
+    </Target>
+    <Target Name="Make">
+        <CallTarget Targets="CustomFormatter:Make;SimpleDemo:Make"/>
+    </Target>
+    <Import Project="$(BDS)\Bin\CodeGear.Group.Targets" Condition="Exists('$(BDS)\Bin\CodeGear.Group.Targets')"/>
+</Project>
