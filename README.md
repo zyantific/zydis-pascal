@@ -6,7 +6,15 @@ Zydis Pascal Bindings
 Pascal language bindings for the [Zydis library](https://github.com/zyantific/zydis), a fast and lightweight x86/x86-64 disassembler.
 
 ## Readme
-- Everything in this repository is WIP
+The Zydis pascal bindings support both dynamic and static linkage. The required binaries for Windows can be acquired in the [Releases](https://github.com/zyantific/zydis-pascal/releases) section.
+
+#### Dynamic
+- Extract the `Zydis32.dll` or `Zydis64.dll` from the `Bin32`/`Bin64` folder to the directory that contains your application or install the library to your `C:\Windows\System32\` (64-bot) / `C:\Windows\SysWOW64\` (32-bit) directory
+- Enable the `{$DEFINE ZYDIS_DYNAMIC_LINK}` compiler-directive (enabled by default) in `Zydis.pas`
+
+#### Static
+- Extract the complete `Bin32`/`Bin64` folder to the root of the pascal bindings directory
+- Disable the `{$DEFINE ZYDIS_DYNAMIC_LINK}` compiler-directive in `Zydis.pas`
 
 ## Example
 ```pascal
