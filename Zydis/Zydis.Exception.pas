@@ -28,8 +28,12 @@ unit Zydis.Exception;
 
 interface
 
+{$IFDEF FPC}
+  {$MODE DELPHI}
+{$ENDIF}
+
 uses
-  System.SysUtils, Zydis;
+  {$IFNDEF FPC}System.SysUtils{$ELSE}SysUtils{$ENDIF}, Zydis;
 
 type
   TZydisException = class(Exception)

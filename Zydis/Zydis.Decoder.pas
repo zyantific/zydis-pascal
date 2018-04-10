@@ -28,8 +28,12 @@ unit Zydis.Decoder;
 
 interface
 
+{$IFDEF FPC}
+  {$MODE DELPHI}
+{$ENDIF}
+
 uses
-  System.SysUtils, Zydis, Zydis.Exception;
+  {$IFNDEF FPC}System.SysUtils{$ELSE}SysUtils{$ENDIF}, Zydis, Zydis.Exception;
 
 type
   TZydisDecoder = class sealed(TObject)
@@ -61,7 +65,7 @@ procedure TZydisDecoder.DecodeBuffer(const Buffer: Pointer; Length: ZydisUSize;
 var
   Status: TZydisStatus;
 begin
-  Status := ZydisDecoderDecodeBuffer(FContext, Buffer, Length, InstructionPointer, Instruction);
+  Status := ZydisDecoderDecodeBuffer(@FContext, Buffer, Length, InstructionPointer, Instruction);
   if (not ZydisSuccess(Status)) then TZydisException.RaiseException(Status);
 end;
 

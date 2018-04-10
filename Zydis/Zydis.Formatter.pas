@@ -28,8 +28,12 @@ unit Zydis.Formatter;
 
 interface
 
+{$IFDEF FPC}
+  {$MODE DELPHI}
+{$ENDIF}
+
 uses
-  System.SysUtils, Zydis, Zydis.Exception;
+  {$IFNDEF FPC}System.SysUtils{$ELSE}SysUtils{$ENDIF}, Zydis, Zydis.Exception;
 
 type
   TZydisFormatter = class(TObject)
@@ -363,23 +367,24 @@ end;
 
 function TZydisFormatter.FormatInstruction(const Instruction: TZydisDecodedInstruction): String;
 const
-  HEAP_BUFFER_LEN = 256;
+  STACK_BUFFER_LEN = 256;
 var
   Status: TZydisStatus;
   Buffer: array of AnsiChar;
   BufferLen: ZydisUSize;
-  StackBuf: array[0..HEAP_BUFFER_LEN - 1] of AnsiChar;
+  StackBuf: array[0..STACK_BUFFER_LEN - 1] of AnsiChar;
   Data: Pointer;
 begin
-  BufferLen := HEAP_BUFFER_LEN;
-  Status :=
-    ZydisFormatterFormatInstructionEx(FContext, Instruction, @StackBuf[0], HEAP_BUFFER_LEN, Self);
+  BufferLen := STACK_BUFFER_LEN;
+  Status := ZydisFormatterFormatInstructionEx(@FContext, @Instruction, @StackBuf[0],
+    STACK_BUFFER_LEN, Self);
   Data := @StackBuf[0];
   while (Status = ZYDIS_STATUS_INSUFFICIENT_BUFFER_SIZE) do
   begin
     BufferLen := BufferLen * 2;
     SetLength(Buffer, BufferLen);
-    Status := ZydisFormatterFormatInstructionEx(FContext, Instruction, @Buffer[0], BufferLen, Self);
+    Status := ZydisFormatterFormatInstructionEx(@FContext, @Instruction, @Buffer[0],
+      BufferLen, Self);
     Data := @Buffer[0];
   end;
   if (not ZydisSuccess(Status)) then TZydisException.RaiseException(Status);
@@ -389,24 +394,24 @@ end;
 function TZydisFormatter.FormatOperand(const Instruction: TZydisDecodedInstruction;
   Index: ZydisU8): String;
 const
-  HEAP_BUFFER_LEN = 64;
+  STACK_BUFFER_LEN = 64;
 var
   Status: TZydisStatus;
   Buffer: array of AnsiChar;
   BufferLen: ZydisUSize;
-  StackBuf: array[0..HEAP_BUFFER_LEN - 1] of AnsiChar;
+  StackBuf: array[0..STACK_BUFFER_LEN - 1] of AnsiChar;
   Data: Pointer;
 begin
-  BufferLen := HEAP_BUFFER_LEN;
-  Status := ZydisFormatterFormatOperandEx(FContext, Instruction, Index, @StackBuf[0],
-    HEAP_BUFFER_LEN, Self);
+  BufferLen := STACK_BUFFER_LEN;
+  Status := ZydisFormatterFormatOperandEx(@FContext, @Instruction, Index, @StackBuf[0],
+    STACK_BUFFER_LEN, Self);
   Data := @StackBuf[0];
   while (Status = ZYDIS_STATUS_INSUFFICIENT_BUFFER_SIZE) do
   begin
     BufferLen := BufferLen * 2;
     SetLength(Buffer, BufferLen);
-    Status := ZydisFormatterFormatOperandEx(FContext, Instruction, Index, @Buffer[0], BufferLen,
-      Self);
+    Status := ZydisFormatterFormatOperandEx(@FContext, @Instruction, Index, @Buffer[0],
+      BufferLen, Self);
     Data := @Buffer[0];
   end;
   if (not ZydisSuccess(Status)) then TZydisException.RaiseException(Status);

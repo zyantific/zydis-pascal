@@ -31,11 +31,11 @@ program CustomFormatter;
 {$R *.res}
 
 uses
-  System.SysUtils,
   Zydis in '..\Zydis\Zydis.pas',
   Zydis.Exception in '..\Zydis\Zydis.Exception.pas',
   Zydis.Decoder in '..\Zydis\Zydis.Decoder.pas',
-  Zydis.Formatter in '..\Zydis\Zydis.Formatter.pas';
+  Zydis.Formatter in '..\Zydis\Zydis.Formatter.pas',
+  {$IFNDEF FPC}System.SysUtils{$ELSE}SysUtils{$ENDIF};
 
 {* ============================================================================================== *}
 {* Formatter                                                                                      *}
@@ -169,15 +169,15 @@ end;
 {* ============================================================================================== *}
 
 const
-  X86DATA: array of Byte =
-  [
+  X86DATA: array[0..17] of Byte =
+  (
     // cmpps xmm1, xmm4, 0x03
     $0F, $C2, $CC, $03,
     // vcmppd xmm1, xmm2, xmm3, 0x17
     $C5, $E9, $C2, $CB, $17,
     // vcmpps k2 {k7}, zmm2, dword ptr ds:[rax + rbx*4 + 0x100] {1to16}, 0x0F
     $62, $F1, $6C, $5F, $C2, $54, $98, $40, $0F
-  ];
+  );
 
 var
   Formatter: TZydisCustomFormatter;

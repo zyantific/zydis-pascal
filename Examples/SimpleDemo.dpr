@@ -31,20 +31,23 @@ program SimpleDemo;
 {$R *.res}
 
 uses
-  System.SysUtils,
   Zydis in '../Zydis/Zydis.pas',
   Zydis.Exception in '../Zydis/Zydis.Exception.pas',
   Zydis.Decoder in '../Zydis/Zydis.Decoder.pas',
-  Zydis.Formatter in '../Zydis/Zydis.Formatter.pas';
+  Zydis.Formatter in '../Zydis/Zydis.Formatter.pas',
+  {$IFNDEF FPC}System.SysUtils{$ELSE}SysUtils{$ENDIF};
 
 {* ============================================================================================== *}
 {* Entry point                                                                                    *}
 {* ============================================================================================== *}
 
 const
-  X86DATA: array of Byte = [$51, $8D, $45, $FF, $50, $FF, $75, $0C, $FF, $75,
-                            $08, $FF, $15, $A0, $A5, $48, $76, $85, $C0, $0F,
-                            $88, $FC, $DA, $02, $00];
+  X86DATA: array[0..24] of Byte =
+  (
+    $51, $8D, $45, $FF, $50, $FF, $75, $0C, $FF, $75,
+    $08, $FF, $15, $A0, $A5, $48, $76, $85, $C0, $0F,
+    $88, $FC, $DA, $02, $00
+  );
 
 var
   Formatter: Zydis.Formatter.TZydisFormatter;

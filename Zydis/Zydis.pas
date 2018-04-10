@@ -28,7 +28,11 @@ unit Zydis;
 
 interface
 
-{$DEFINE ZYDIS_DYNAMIC_LINK}
+{ $DEFINE ZYDIS_DYNAMIC_LINK}
+
+{$IFDEF FPC}
+  {$MODE DELPHI}
+{$ENDIF}
 
 {* ============================================================================================== *}
 {* Constants                                                                                      *}
@@ -404,6 +408,7 @@ type
     Value: TZydisDecodedOperandImmValue;
   end;
 
+  PZydisDecodedOperand = ^TZydisDecodedOperand;
   TZydisDecodedOperand = record
   public
     Id: ZydisU8;
@@ -877,6 +882,7 @@ type
     Imm: array[0..1] of TZydisDecodedInstructionRawImm;
   end;
 
+  PZydisDecodedInstruction = ^TZydisDecodedInstruction;
   TZydisDecodedInstruction = record
   public
     MachineMode: TZydisMachineMode;
@@ -921,6 +927,7 @@ type
 {* ZydisDecoder                                                                                   *}
 {* ---------------------------------------------------------------------------------------------- *}
 
+  PZydisDecoder = ^TZydisDecoder;
   TZydisDecoder = record
   public
     MachineMode: TZydisMachineMode;
@@ -1174,11 +1181,11 @@ function ZydisStringFinalize(var Str: TZydisString): TZydisStatus; cdecl;
   external {$IFDEF ZYDIS_DYNAMIC_LINK}ZYDIS_LIBRARY_NAME{$ENDIF}
   name ZYDIS_SYMBOL_PREFIX + 'ZydisStringFinalize';
 
-function ZydisStringAppend(var Str: TZydisString; const Text: TZydisString): TZydisStatus; cdecl;
+function ZydisStringAppend(var Str: TZydisString; const Text: PZydisString): TZydisStatus; cdecl;
   external {$IFDEF ZYDIS_DYNAMIC_LINK}ZYDIS_LIBRARY_NAME{$ENDIF}
   name ZYDIS_SYMBOL_PREFIX + 'ZydisStringAppend';
 
-function ZydisStringAppendEx(var Str: TZydisString; const Text: TZydisString;
+function ZydisStringAppendEx(var Str: TZydisString; const Text: PZydisString;
   LetterCase: TZydisLetterCase): TZydisStatus; cdecl;
   external {$IFDEF ZYDIS_DYNAMIC_LINK}ZYDIS_LIBRARY_NAME{$ENDIF}
   name ZYDIS_SYMBOL_PREFIX + 'ZydisStringAppendEx';
@@ -1203,12 +1210,12 @@ function ZydisStringAppendDecS(var Str: TZydisString; Value: ZydisI64;
   name ZYDIS_SYMBOL_PREFIX + 'ZydisStringAppendDecS';
 
 function ZydisStringAppendHexU(var Str: TZydisString; Value: ZydisU64; PaddingLength: ZydisU8;
-  UpperCase: ZydisBool; const Prefix, Suffix: TZydisString): TZydisStatus; cdecl;
+  UpperCase: ZydisBool; const Prefix, Suffix: PZydisString): TZydisStatus; cdecl;
   external {$IFDEF ZYDIS_DYNAMIC_LINK}ZYDIS_LIBRARY_NAME{$ENDIF}
   name ZYDIS_SYMBOL_PREFIX + 'ZydisStringAppendHexU';
 
 function ZydisStringAppendHexS(var Str: TZydisString; Value: ZydisI64; PaddingLength: ZydisU8;
-  UpperCase: ZydisBool; const Prefix, Suffix: TZydisString): TZydisStatus; cdecl;
+  UpperCase: ZydisBool; const Prefix, Suffix: PZydisString): TZydisStatus; cdecl;
   external {$IFDEF ZYDIS_DYNAMIC_LINK}ZYDIS_LIBRARY_NAME{$ENDIF}
   name ZYDIS_SYMBOL_PREFIX + 'ZydisStringAppendHexS';
 
@@ -1287,7 +1294,7 @@ function ZydisDecoderEnableMode(var Decoder: TZydisDecoder; DecoderMode: TZydisD
   external {$IFDEF ZYDIS_DYNAMIC_LINK}ZYDIS_LIBRARY_NAME{$ENDIF}
   name ZYDIS_SYMBOL_PREFIX + 'ZydisDecoderEnableMode';
 
-function ZydisDecoderDecodeBuffer(var Decoder: TZydisDecoder; Buffer: Pointer;
+function ZydisDecoderDecodeBuffer(const Decoder: PZydisDecoder; Buffer: Pointer;
   BufferLen: ZydisUSize; InstructionPointer: ZydisU64;
   var Instruction: TZydisDecodedInstruction): TZydisStatus; cdecl;
   external {$IFDEF ZYDIS_DYNAMIC_LINK}ZYDIS_LIBRARY_NAME{$ENDIF}
@@ -1312,26 +1319,26 @@ function ZydisFormatterSetHook(var Formatter: TZydisFormatter;
   external {$IFDEF ZYDIS_DYNAMIC_LINK}ZYDIS_LIBRARY_NAME{$ENDIF}
   name ZYDIS_SYMBOL_PREFIX + 'ZydisFormatterSetHook';
 
-function ZydisFormatterFormatInstruction(const Formatter: TZydisFormatter;
-  const Instruction: TZydisDecodedInstruction; Buffer: Pointer;
+function ZydisFormatterFormatInstruction(const Formatter: PZydisFormatter;
+  const Instruction: PZydisDecodedInstruction; Buffer: Pointer;
   BufferLen: ZydisUSize): TZydisStatus; cdecl;
   external {$IFDEF ZYDIS_DYNAMIC_LINK}ZYDIS_LIBRARY_NAME{$ENDIF}
   name ZYDIS_SYMBOL_PREFIX + 'ZydisFormatterFormatInstruction';
 
-function ZydisFormatterFormatInstructionEx(const Formatter: TZydisFormatter;
-  const Instruction: TZydisDecodedInstruction; Buffer: Pointer;
+function ZydisFormatterFormatInstructionEx(const Formatter: PZydisFormatter;
+  const Instruction: PZydisDecodedInstruction; Buffer: Pointer;
   BufferLen: ZydisUSize; UserData: Pointer): TZydisStatus; cdecl;
   external {$IFDEF ZYDIS_DYNAMIC_LINK}ZYDIS_LIBRARY_NAME{$ENDIF}
   name ZYDIS_SYMBOL_PREFIX + 'ZydisFormatterFormatInstructionEx';
 
-function ZydisFormatterFormatOperand(const Formatter: TZydisFormatter;
-  const Instruction: TZydisDecodedInstruction; Index: ZydisU8; Buffer: Pointer;
+function ZydisFormatterFormatOperand(const Formatter: PZydisFormatter;
+  const Instruction: PZydisDecodedInstruction; Index: ZydisU8; Buffer: Pointer;
   BufferLen: ZydisUSize): TZydisStatus; cdecl;
   external {$IFDEF ZYDIS_DYNAMIC_LINK}ZYDIS_LIBRARY_NAME{$ENDIF}
   name ZYDIS_SYMBOL_PREFIX + 'ZydisFormatterFormatOperand';
 
-function ZydisFormatterFormatOperandEx(const Formatter: TZydisFormatter;
-  const Instruction: TZydisDecodedInstruction; Index: ZydisU8; Buffer: Pointer;
+function ZydisFormatterFormatOperandEx(const Formatter: PZydisFormatter;
+  const Instruction: PZydisDecodedInstruction; Index: ZydisU8; Buffer: Pointer;
   BufferLen: ZydisUSize; UserData: Pointer): TZydisStatus; cdecl;
   external {$IFDEF ZYDIS_DYNAMIC_LINK}ZYDIS_LIBRARY_NAME{$ENDIF}
   name ZYDIS_SYMBOL_PREFIX + 'ZydisFormatterFormatOperandEx';
@@ -1340,12 +1347,12 @@ function ZydisFormatterFormatOperandEx(const Formatter: TZydisFormatter;
 {* Utils                                                                                          *}
 {* ---------------------------------------------------------------------------------------------- *}
 
-function ZydisCalcAbsoluteAddress(const Instruction: TZydisDecodedInstruction;
-  const Operand: TZydisDecodedOperand; var Address: ZydisU64): TZydisStatus; cdecl;
+function ZydisCalcAbsoluteAddress(const Instruction: PZydisDecodedInstruction;
+  const Operand: PZydisDecodedOperand; var Address: ZydisU64): TZydisStatus; cdecl;
   external {$IFDEF ZYDIS_DYNAMIC_LINK}ZYDIS_LIBRARY_NAME{$ENDIF}
   name ZYDIS_SYMBOL_PREFIX + 'ZydisCalcAbsoluteAddress';
 
-function ZydisGetAccessedFlagsByAction(const Instruction: TZydisDecodedInstruction;
+function ZydisGetAccessedFlagsByAction(const Instruction: PZydisDecodedInstruction;
   Action: TZydisCPUFlagAction; var Flags: TZydisCPUFlagMask): TZydisStatus; cdecl;
   external {$IFDEF ZYDIS_DYNAMIC_LINK}ZYDIS_LIBRARY_NAME{$ENDIF}
   name ZYDIS_SYMBOL_PREFIX + 'ZydisGetAccessedFlagsByAction';
@@ -1605,7 +1612,7 @@ end;
 
 function TZydisStringHelper.Append(const Value: TZydisString): TZydisStatus;
 begin
-  Result := ZydisStringAppend(Self, Value);
+  Result := ZydisStringAppend(Self, @Value);
 end;
 
 function TZydisStringHelper.Append(const Value: PAnsiChar): TZydisStatus;
