@@ -1,612 +1,221 @@
-{***************************************************************************************************
-
-  Zydis Top Level API
-
-  Original Author : Florian Bernd
-
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
- * furnished to do so, subject to the following conditions:
- *
- * The above copyright notice and this permission notice shall be included in all
- * copies or substantial portions of the Software.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
- * SOFTWARE.
-
-***************************************************************************************************}
-
 unit Zydis.Formatter;
-
-interface
 
 {$IFDEF FPC}
   {$MODE DELPHI}
+  {$PackRecords C}
 {$ENDIF}
 
+interface
+
 uses
-  {$IFNDEF FPC}System.SysUtils{$ELSE}SysUtils{$ENDIF}, Zydis, Zydis.Exception;
+  Zydis.enums,
+  Zydis.types,
+  Zycore.Strings,
+  zycore.formatterbuffer,
+  Zydis.Decoder.Types;
 
 type
-  TZydisFormatter = class(TObject)
-  strict private
-    class var Callbacks: array[TZydisFormatterHookType] of Pointer;
-  strict private
-    FContext: Zydis.TZydisFormatter;
-    FHexPrefix: AnsiString;
-    FHexSuffix: AnsiString;
-  strict private
-    procedure SetProperty(&Property: TZydisFormatterProperty; Value: ZydisUPointer); inline;
-    procedure SetUppercase(Value: ZydisBool); inline;
-    procedure SetForceMemorySegments(Value: ZydisBool); inline;
-    procedure SetForceMemorySize(Value: ZydisBool); inline;
-    procedure SetAddressFormat(Value: TZydisAddressFormat); inline;
-    procedure SetDisplacementFormat(Value: TZydisDisplacementFormat); inline;
-    procedure SetImmediateFormat(Value: TZydisImmediateFormat); inline;
-    procedure SetHexUppercase(Value: ZydisBool); inline;
-    procedure SetHexPrefix(const Value: AnsiString); inline;
-    procedure SetHexSuffix(const Value: AnsiString); inline;
-    procedure SetHexPaddingAddress(const Value: ZydisU8); inline;
-    procedure SetHexPaddingDisplacement(const Value: ZydisU8); inline;
-    procedure SetHexPaddingImmediate(const Value: ZydisU8); inline;
-  strict private
-    class function InternalPreInstruction(const Formatter: Zydis.TZydisFormatter;
-      var Str: TZydisString; const Instruction: TZydisDecodedInstruction;
-      UserData: TZydisFormatter): TZydisStatus; static; cdecl;
-    class function InternalPostInstruction(const Formatter: Zydis.TZydisFormatter;
-      var Str: TZydisString; const Instruction: TZydisDecodedInstruction;
-      UserData: TZydisFormatter): TZydisStatus; static; cdecl;
-    class function InternalPreOperand(const Formatter: Zydis.TZydisFormatter;
-      var Str: TZydisString; const Instruction: TZydisDecodedInstruction;
-      const Operand: TZydisDecodedOperand; UserData: TZydisFormatter): TZydisStatus; static; cdecl;
-    class function InternalPostOperand(const Formatter: Zydis.TZydisFormatter;
-      var Str: TZydisString; const Instruction: TZydisDecodedInstruction;
-      const Operand: TZydisDecodedOperand; UserData: TZydisFormatter): TZydisStatus; static; cdecl;
-    class function InternalFormatInstruction(const Formatter: Zydis.TZydisFormatter;
-      var Str: TZydisString; const Instruction: TZydisDecodedInstruction;
-      UserData: TZydisFormatter): TZydisStatus; static; cdecl;
-    class function InternalFormatOperandReg(const Formatter: Zydis.TZydisFormatter;
-      var Str: TZydisString; const Instruction: TZydisDecodedInstruction;
-      const Operand: TZydisDecodedOperand; UserData: TZydisFormatter): TZydisStatus; static; cdecl;
-    class function InternalFormatOperandMem(const Formatter: Zydis.TZydisFormatter;
-      var Str: TZydisString; const Instruction: TZydisDecodedInstruction;
-      const Operand: TZydisDecodedOperand; UserData: TZydisFormatter): TZydisStatus; static; cdecl;
-    class function InternalFormatOperandPtr(const Formatter: Zydis.TZydisFormatter;
-      var Str: TZydisString; const Instruction: TZydisDecodedInstruction;
-      const Operand: TZydisDecodedOperand; UserData: TZydisFormatter): TZydisStatus; static; cdecl;
-    class function InternalFormatOperandImm(const Formatter: Zydis.TZydisFormatter;
-      var Str: TZydisString; const Instruction: TZydisDecodedInstruction;
-      const Operand: TZydisDecodedOperand; UserData: TZydisFormatter): TZydisStatus; static; cdecl;
-    class function InternalPrintMnemonic(const Formatter: Zydis.TZydisFormatter;
-      var Str: TZydisString; const Instruction: TZydisDecodedInstruction;
-      UserData: TZydisFormatter): TZydisStatus; static; cdecl;
-    class function InternalPrintRegister(const Formatter: Zydis.TZydisFormatter;
-      var Str: TZydisString; const Instruction: TZydisDecodedInstruction;
-      const Operand: TZydisDecodedOperand; Reg: TZydisRegister; 
-      UserData: TZydisFormatter): TZydisStatus; static; cdecl;
-    class function InternalPrintAddress(const Formatter: Zydis.TZydisFormatter;
-      var Str: TZydisString; const Instruction: TZydisDecodedInstruction;
-      const Operand: TZydisDecodedOperand; Address: ZydisU64; 
-      UserData: TZydisFormatter): TZydisStatus; static; cdecl;
-    class function InternalPrintDisp(const Formatter: Zydis.TZydisFormatter;
-      var Str: TZydisString; const Instruction: TZydisDecodedInstruction;
-      const Operand: TZydisDecodedOperand; UserData: TZydisFormatter): TZydisStatus; static; cdecl;
-    class function InternalPrintImm(const Formatter: Zydis.TZydisFormatter;
-      var Str: TZydisString; const Instruction: TZydisDecodedInstruction;
-      const Operand: TZydisDecodedOperand; UserData: TZydisFormatter): TZydisStatus; static; cdecl;
-    class function InternalPrintMemSize(const Formatter: Zydis.TZydisFormatter;
-      var Str: TZydisString; const Instruction: TZydisDecodedInstruction;
-      const Operand: TZydisDecodedOperand; UserData: TZydisFormatter): TZydisStatus; static; cdecl;
-    class function InternalPrintPrefixes(const Formatter: Zydis.TZydisFormatter;
-      var Str: TZydisString; const Instruction: TZydisDecodedInstruction;
-      UserData: TZydisFormatter): TZydisStatus; static; cdecl;
-    class function InternalPrintDecorator(const Formatter: Zydis.TZydisFormatter;
-      var Str: TZydisString; const Instruction: TZydisDecodedInstruction;
-      const Operand: TZydisDecodedOperand; Decorator: TZydisDecoratorType; 
-      UserData: TZydisFormatter): TZydisStatus; static; cdecl;
-  strict protected
-    function DoPreInstruction(const Formatter: Zydis.TZydisFormatter; var Str: TZydisString;
-      const Instruction: TZydisDecodedInstruction): TZydisStatus; virtual; 
-    function DoPostInstruction(const Formatter: Zydis.TZydisFormatter; var Str: TZydisString;
-      const Instruction: TZydisDecodedInstruction): TZydisStatus; virtual; 
-    function DoPreOperand(const Formatter: Zydis.TZydisFormatter; var Str: TZydisString;
-      const Instruction: TZydisDecodedInstruction;
-      const Operand: TZydisDecodedOperand): TZydisStatus; virtual; 
-    function DoPostOperand(const Formatter: Zydis.TZydisFormatter; var Str: TZydisString;
-      const Instruction: TZydisDecodedInstruction;
-      const Operand: TZydisDecodedOperand): TZydisStatus; virtual; 
-    function DoFormatInstruction(const Formatter: Zydis.TZydisFormatter; var Str: TZydisString;
-      const Instruction: TZydisDecodedInstruction): TZydisStatus; virtual; 
-    function DoFormatOperandReg(const Formatter: Zydis.TZydisFormatter; var Str: TZydisString;
-      const Instruction: TZydisDecodedInstruction;
-      const Operand: TZydisDecodedOperand): TZydisStatus; virtual; 
-    function DoFormatOperandMem(const Formatter: Zydis.TZydisFormatter; var Str: TZydisString;
-      const Instruction: TZydisDecodedInstruction;
-      const Operand: TZydisDecodedOperand): TZydisStatus; virtual;
-    function DoFormatOperandPtr(const Formatter: Zydis.TZydisFormatter; var Str: TZydisString;
-      const Instruction: TZydisDecodedInstruction;
-      const Operand: TZydisDecodedOperand): TZydisStatus; virtual;
-    function DoFormatOperandImm(const Formatter: Zydis.TZydisFormatter; var Str: TZydisString;
-      const Instruction: TZydisDecodedInstruction;
-      const Operand: TZydisDecodedOperand): TZydisStatus; virtual;
-    function DoPrintMnemonic(const Formatter: Zydis.TZydisFormatter;
-      var Str: TZydisString; const Instruction: TZydisDecodedInstruction): TZydisStatus; virtual;
-    function DoPrintRegister(const Formatter: Zydis.TZydisFormatter;
-      var Str: TZydisString; const Instruction: TZydisDecodedInstruction;
-      const Operand: TZydisDecodedOperand; Reg: TZydisRegister): TZydisStatus; virtual;
-    function DoPrintAddress(const Formatter: Zydis.TZydisFormatter;
-      var Str: TZydisString; const Instruction: TZydisDecodedInstruction;
-      const Operand: TZydisDecodedOperand; Address: ZydisU64): TZydisStatus; virtual;
-    function DoPrintDisp(const Formatter: Zydis.TZydisFormatter;
-      var Str: TZydisString; const Instruction: TZydisDecodedInstruction;
-      const Operand: TZydisDecodedOperand): TZydisStatus; virtual;
-    function DoPrintImm(const Formatter: Zydis.TZydisFormatter;
-      var Str: TZydisString; const Instruction: TZydisDecodedInstruction;
-      const Operand: TZydisDecodedOperand): TZydisStatus; virtual;
-    function DoPrintMemSize(const Formatter: Zydis.TZydisFormatter;
-      var Str: TZydisString; const Instruction: TZydisDecodedInstruction;
-      const Operand: TZydisDecodedOperand): TZydisStatus; virtual;
-    function DoPrintPrefixes(const Formatter: Zydis.TZydisFormatter;
-      var Str: TZydisString; const Instruction: TZydisDecodedInstruction): TZydisStatus; virtual;
-    function DoPrintDecorator(const Formatter: Zydis.TZydisFormatter;
-      var Str: TZydisString; const Instruction: TZydisDecodedInstruction;
-      const Operand: TZydisDecodedOperand; Decorator: TZydisDecoratorType): TZydisStatus; virtual;
-  public
-    function FormatInstruction(const Instruction: TZydisDecodedInstruction): String;
-    function FormatOperand(const Instruction: TZydisDecodedInstruction; Index: ZydisU8): String;
-  public
-    constructor Create(Style: TZydisFormatterStyle);
-  public
-    class constructor Create;
-  public
-    property Uppercase: ZydisBool write SetUppercase;
-    property ForceMemorySegments: ZydisBool write SetForceMemorySegments;
-    property ForceMemorySize: ZydisBool write SetForceMemorySize;
-    property AddressFormat: TZydisAddressFormat write SetAddressFormat;
-    property DisplacementFormat: TZydisDisplacementFormat write SetDisplacementFormat;
-    property ImmediateFormat: TZydisImmediateFormat write SetImmediateFormat;
-    property HexUppercase: ZydisBool write SetHexUppercase;
-    property HexPrefix: AnsiString write SetHexPrefix;
-    property HexSuffix: AnsiString write SetHexSuffix;
-    property HexPaddingAddress: ZydisU8 write SetHexPaddingAddress;
-    property HexPaddingDisplacement: ZydisU8 write SetHexPaddingDisplacement;
-    property HexPaddingImmediate: ZydisU8 write SetHexPaddingImmediate;
+  PZydisFormatter = ^TZydisFormatter;
+
+
+  { Defines the ZydisFormatterContext struct. }
+  TZydisFormatterContext = record
+    { A pointer to the ZydisDecodedInstruction struct. }
+    instruction: PZydisDecodedInstruction;
+    { A pointer to the first ZydisDecodedOperand struct of the instruction. }
+    operands: PZydisDecodedOperand;
+    { A pointer to the ZydisDecodedOperand struct. }
+    operand: PZydisDecodedOperand;
+    { The runtime address of the instruction. }
+    runtime_address: ZyanU64;
+    { A pointer to user-defined data.
+
+      This is the value that was previously passed as the user_data argument to
+      ZydisFormatterFormatInstruction or ZydisFormatterTokenizeOperand.
+    }
+    user_data: Pointer;
   end;
+  PZydisFormatterContext = ^TZydisFormatterContext;
+
+  { Defines the ZydisFormatterFunc function prototype.
+
+    @param formatter  A pointer to the ZydisFormatter instance.
+    @param buffer     A pointer to the ZydisFormatterBuffer struct.
+    @param context    A pointer to the ZydisFormatterContext struct.
+
+    @return  A zyan status code.
+
+    Returning a status code other than ZYAN_STATUS_SUCCESS will immediately cause the formatting
+    process to fail (see exceptions below).
+
+    Returning ZYDIS_STATUS_SKIP_TOKEN is valid for functions of the following types and will
+    instruct the formatter to omit the whole operand:
+    - ZYDIS_FORMATTER_FUNC_PRE_OPERAND
+    - ZYDIS_FORMATTER_FUNC_POST_OPERAND
+    - ZYDIS_FORMATTER_FUNC_FORMAT_OPERAND_REG
+    - ZYDIS_FORMATTER_FUNC_FORMAT_OPERAND_MEM
+    - ZYDIS_FORMATTER_FUNC_FORMAT_OPERAND_PTR
+    - ZYDIS_FORMATTER_FUNC_FORMAT_OPERAND_IMM
+
+    This function prototype is used by functions of the following types:
+    - ZYDIS_FORMATTER_FUNC_PRE_INSTRUCTION
+    - ZYDIS_FORMATTER_FUNC_POST_INSTRUCTION
+    - ZYDIS_FORMATTER_FUNC_PRE_OPERAND
+    - ZYDIS_FORMATTER_FUNC_POST_OPERAND
+    - ZYDIS_FORMATTER_FUNC_FORMAT_INSTRUCTION
+    - ZYDIS_FORMATTER_FUNC_PRINT_MNEMONIC
+    - ZYDIS_FORMATTER_FUNC_PRINT_PREFIXES
+    - ZYDIS_FORMATTER_FUNC_FORMAT_OPERAND_REG
+    - ZYDIS_FORMATTER_FUNC_FORMAT_OPERAND_MEM
+    - ZYDIS_FORMATTER_FUNC_FORMAT_OPERAND_PTR
+    - ZYDIS_FORMATTER_FUNC_FORMAT_OPERAND_IMM
+    - ZYDIS_FORMATTER_FUNC_PRINT_ADDRESS_ABS
+    - ZYDIS_FORMATTER_FUNC_PRINT_ADDRESS_REL
+    - ZYDIS_FORMATTER_FUNC_PRINT_DISP
+    - ZYDIS_FORMATTER_FUNC_PRINT_IMM
+    - ZYDIS_FORMATTER_FUNC_PRINT_TYPECAST
+    - ZYDIS_FORMATTER_FUNC_PRINT_SEGMENT
+  }
+  TZydisFormatterFunc = function(const formatter: PZydisFormatter; buffer: PZydisFormatterBuffer;
+    context: PZydisFormatterContext): ZyanStatus; cdecl;
+
+  { Defines the ZydisFormatterRegisterFunc function prototype.
+
+    @param formatter  A pointer to the ZydisFormatter instance.
+    @param buffer     A pointer to the ZydisFormatterBuffer struct.
+    @param context    A pointer to the ZydisFormatterContext struct.
+    @param reg        The register.
+
+    @return  Returning a status code other than ZYAN_STATUS_SUCCESS will immediately cause the
+             formatting process to fail.
+  }
+  TZydisFormatterRegisterFunc = function(const formatter: PZydisFormatter; buffer: PZydisFormatterBuffer;
+    context: PZydisFormatterContext; reg: TZydisRegister): ZyanStatus; cdecl;
+
+  { Defines the ZydisFormatterDecoratorFunc function prototype.
+
+    @param formatter  A pointer to the ZydisFormatter instance.
+    @param buffer     A pointer to the ZydisFormatterBuffer struct.
+    @param context    A pointer to the ZydisFormatterContext struct.
+    @param decorator  The decorator type.
+
+    @return  Returning a status code other than ZYAN_STATUS_SUCCESS will immediately cause the
+             formatting process to fail.
+
+    This function type is used for:
+    - ZYDIS_FORMATTER_FUNC_PRINT_DECORATOR
+  }
+  TZydisFormatterDecoratorFunc = function(const formatter: PZydisFormatter; buffer: PZydisFormatterBuffer;
+    context: PZydisFormatterContext; decorator: TZydisDecorator): ZyanStatus; cdecl;
+
+
+  { Context structure keeping track of internal state of the formatter. }
+  TZydisFormatter = record
+    { The formatter style. }
+    style: TZydisFormatterStyle;
+    { The ZYDIS_FORMATTER_PROP_FORCE_SIZE property. }
+    force_memory_size: ZyanBool;
+    { The ZYDIS_FORMATTER_PROP_FORCE_SEGMENT property. }
+    force_memory_segment: ZyanBool;
+    { The ZYDIS_FORMATTER_PROP_FORCE_SCALE_ONE property. }
+    force_memory_scale: ZyanBool;
+    { The ZYDIS_FORMATTER_PROP_FORCE_RELATIVE_BRANCHES property. }
+    force_relative_branches: ZyanBool;
+    { The ZYDIS_FORMATTER_PROP_FORCE_RELATIVE_RIPREL property. }
+    force_relative_riprel: ZyanBool;
+    { The ZYDIS_FORMATTER_PROP_PRINT_BRANCH_SIZE property. }
+    print_branch_size: ZyanBool;
+    { The ZYDIS_FORMATTER_PROP_DETAILED_PREFIXES property. }
+    detailed_prefixes: ZyanBool;
+    { The ZYDIS_FORMATTER_PROP_ADDR_BASE property. }
+    addr_base: TZydisNumericBase;
+    { The ZYDIS_FORMATTER_PROP_ADDR_SIGNEDNESS property. }
+    addr_signedness: TZydisSignedness;
+    { The ZYDIS_FORMATTER_PROP_ADDR_PADDING_ABSOLUTE property. }
+    addr_padding_absolute: TZydisPadding;
+    { The ZYDIS_FORMATTER_PROP_ADDR_PADDING_RELATIVE property. }
+    addr_padding_relative: TZydisPadding;
+    { The ZYDIS_FORMATTER_PROP_DISP_BASE property. }
+    disp_base: TZydisNumericBase;
+    { The ZYDIS_FORMATTER_PROP_DISP_SIGNEDNESS property. }
+    disp_signedness: TZydisSignedness;
+    { The ZYDIS_FORMATTER_PROP_DISP_PADDING property. }
+    disp_padding: TZydisPadding;
+    { The ZYDIS_FORMATTER_PROP_IMM_BASE property. }
+    imm_base: TZydisNumericBase;
+    { The ZYDIS_FORMATTER_PROP_IMM_SIGNEDNESS property. }
+    imm_signedness: TZydisSignedness;
+    { The ZYDIS_FORMATTER_PROP_IMM_PADDING property. }
+    imm_padding: TZydisPadding;
+    { The ZYDIS_FORMATTER_PROP_UPPERCASE_PREFIXES property. }
+    case_prefixes: ZyanI32;
+    { The ZYDIS_FORMATTER_PROP_UPPERCASE_MNEMONIC property. }
+    case_mnemonic: ZyanI32;
+    { The ZYDIS_FORMATTER_PROP_UPPERCASE_REGISTERS property. }
+    case_registers: ZyanI32;
+    { The ZYDIS_FORMATTER_PROP_UPPERCASE_TYPECASTS property. }
+    case_typecasts: ZyanI32;
+    { The ZYDIS_FORMATTER_PROP_UPPERCASE_DECORATORS property. }
+    case_decorators: ZyanI32;
+    { The ZYDIS_FORMATTER_PROP_HEX_UPPERCASE property. }
+    hex_uppercase: ZyanBool;
+    { The ZYDIS_FORMATTER_PROP_HEX_FORCE_LEADING_NUMBER property. }
+    hex_force_leading_number: ZyanBool;
+
+    { The number formats for all numeric bases. }
+    { Index 0 = prefix }
+    { Index 1 = suffix }
+    number_format: array[0..ZYDIS_NUMERIC_BASE_MAX_VALUE + 1, 0..1] of record
+      { A pointer to the ZyanStringView to use as prefix/suffix. }
+      string_: PZyanStringView;
+      { The ZyanStringView to use as prefix/suffix. }
+      string_data: TZyanStringView;
+      { The actual string data. }
+      buffer: array[0..10] of Char;
+    end;
+
+    { The ZYDIS_FORMATTER_FUNC_PRE_INSTRUCTION function. }
+    func_pre_instruction: TZydisFormatterFunc;
+    { The ZYDIS_FORMATTER_FUNC_POST_INSTRUCTION function. }
+    func_post_instruction: TZydisFormatterFunc;
+    { The ZYDIS_FORMATTER_FUNC_FORMAT_INSTRUCTION function. }
+    func_format_instruction: TZydisFormatterFunc;
+    { The ZYDIS_FORMATTER_FUNC_PRE_OPERAND function. }
+    func_pre_operand: TZydisFormatterFunc;
+    { The ZYDIS_FORMATTER_FUNC_POST_OPERAND function. }
+    func_post_operand: TZydisFormatterFunc;
+    { The ZYDIS_FORMATTER_FUNC_FORMAT_OPERAND_REG function. }
+    func_format_operand_reg: TZydisFormatterFunc;
+    { The ZYDIS_FORMATTER_FUNC_FORMAT_OPERAND_MEM function. }
+    func_format_operand_mem: TZydisFormatterFunc;
+    { The ZYDIS_FORMATTER_FUNC_FORMAT_OPERAND_PTR function. }
+    func_format_operand_ptr: TZydisFormatterFunc;
+    { The ZYDIS_FORMATTER_FUNC_FORMAT_OPERAND_IMM function. }
+    func_format_operand_imm: TZydisFormatterFunc;
+    { The ZYDIS_FORMATTER_FUNC_PRINT_MNEMONIC function. }
+    func_print_mnemonic: TZydisFormatterFunc;
+    { The ZYDIS_FORMATTER_FUNC_PRINT_REGISTER function. }
+    func_print_register: TZydisFormatterRegisterFunc;
+    { The ZYDIS_FORMATTER_FUNC_PRINT_ADDRESS_ABS function. }
+    func_print_address_abs: TZydisFormatterFunc;
+    { The ZYDIS_FORMATTER_FUNC_PRINT_ADDRESS_REL function. }
+    func_print_address_rel: TZydisFormatterFunc;
+    { The ZYDIS_FORMATTER_FUNC_PRINT_DISP function. }
+    func_print_disp: TZydisFormatterFunc;
+    { The ZYDIS_FORMATTER_FUNC_PRINT_IMM function. }
+    func_print_imm: TZydisFormatterFunc;
+    { The ZYDIS_FORMATTER_FUNC_PRINT_TYPECAST function. }
+    func_print_typecast: TZydisFormatterFunc;
+    { The ZYDIS_FORMATTER_FUNC_PRINT_SEGMENT function. }
+    func_print_segment: TZydisFormatterFunc;
+    { The ZYDIS_FORMATTER_FUNC_PRINT_PREFIXES function. }
+    func_print_prefixes: TZydisFormatterFunc;
+    { The ZYDIS_FORMATTER_FUNC_PRINT_DECORATOR function. }
+    func_print_decorator: TZydisFormatterDecoratorFunc;
+  end;
+
 
 implementation
 
-{ TZydisFormatter }
-
-constructor TZydisFormatter.Create(Style: TZydisFormatterStyle);
-var
-  Status: TZydisStatus;
-  HookType: TZydisFormatterHookType;
-begin
-  inherited Create;
-  Status := ZydisFormatterInit(FContext, Style);
-  if (not ZydisSuccess(Status)) then TZydisException.RaiseException(Status);
-  for HookType := Low(TZydisFormatterHookType) to High(TZydisFormatterHookType) do
-  begin
-    Status := ZydisFormatterSetHook(FContext, HookType, Callbacks[HookType]);
-    if (not ZydisSuccess(Status)) then TZydisException.RaiseException(Status);
-  end;
-end;
-
-class constructor TZydisFormatter.Create;
-begin
-  Callbacks[ZYDIS_FORMATTER_HOOK_PRE_INSTRUCTION   ] := @InternalPreInstruction;
-  Callbacks[ZYDIS_FORMATTER_HOOK_POST_INSTRUCTION  ] := @InternalPostInstruction;
-  Callbacks[ZYDIS_FORMATTER_HOOK_PRE_OPERAND       ] := @InternalPreOperand;
-  Callbacks[ZYDIS_FORMATTER_HOOK_POST_OPERAND      ] := @InternalPostOperand;
-  Callbacks[ZYDIS_FORMATTER_HOOK_FORMAT_INSTRUCTION] := @InternalFormatInstruction;
-  Callbacks[ZYDIS_FORMATTER_HOOK_FORMAT_OPERAND_REG] := @InternalFormatOperandReg;
-  Callbacks[ZYDIS_FORMATTER_HOOK_FORMAT_OPERAND_MEM] := @InternalFormatOperandMem;
-  Callbacks[ZYDIS_FORMATTER_HOOK_FORMAT_OPERAND_PTR] := @InternalFormatOperandPtr;
-  Callbacks[ZYDIS_FORMATTER_HOOK_FORMAT_OPERAND_IMM] := @InternalFormatOperandImm;
-  Callbacks[ZYDIS_FORMATTER_HOOK_PRINT_MNEMONIC    ] := @InternalPrintMnemonic;
-  Callbacks[ZYDIS_FORMATTER_HOOK_PRINT_REGISTER    ] := @InternalPrintRegister;
-  Callbacks[ZYDIS_FORMATTER_HOOK_PRINT_ADDRESS     ] := @InternalPrintAddress;
-  Callbacks[ZYDIS_FORMATTER_HOOK_PRINT_DISP        ] := @InternalPrintDisp;
-  Callbacks[ZYDIS_FORMATTER_HOOK_PRINT_IMM         ] := @InternalPrintImm;
-  Callbacks[ZYDIS_FORMATTER_HOOK_PRINT_MEMSIZE     ] := @InternalPrintMemSize;
-  Callbacks[ZYDIS_FORMATTER_HOOK_PRINT_PREFIXES    ] := @InternalPrintPrefixes;
-  Callbacks[ZYDIS_FORMATTER_HOOK_PRINT_DECORATOR   ] := @InternalPrintDecorator;
-end;
-
-function TZydisFormatter.DoFormatInstruction(const Formatter: Zydis.TZydisFormatter;
-  var Str: TZydisString; const Instruction: TZydisDecodedInstruction): TZydisStatus;
-begin
-  Result := TZydisFormatterFunc(Callbacks[ZYDIS_FORMATTER_HOOK_FORMAT_INSTRUCTION])(
-    @Formatter, Str, Instruction, Self);
-end;
-
-function TZydisFormatter.DoFormatOperandImm(const Formatter: Zydis.TZydisFormatter;
-  var Str: TZydisString; const Instruction: TZydisDecodedInstruction;
-  const Operand: TZydisDecodedOperand): TZydisStatus;
-begin
-  Result := TZydisFormatterOperandFunc(Callbacks[ZYDIS_FORMATTER_HOOK_FORMAT_OPERAND_IMM])(
-    @Formatter, Str, Instruction, Operand, Self);
-end;
-
-function TZydisFormatter.DoFormatOperandMem(const Formatter: Zydis.TZydisFormatter;
-  var Str: TZydisString; const Instruction: TZydisDecodedInstruction;
-  const Operand: TZydisDecodedOperand): TZydisStatus;
-begin
-  Result := TZydisFormatterOperandFunc(Callbacks[ZYDIS_FORMATTER_HOOK_FORMAT_OPERAND_MEM])(
-    @Formatter, Str, Instruction, Operand, Self);
-end;
-
-function TZydisFormatter.DoFormatOperandPtr(const Formatter: Zydis.TZydisFormatter;
-  var Str: TZydisString; const Instruction: TZydisDecodedInstruction;
-  const Operand: TZydisDecodedOperand): TZydisStatus;
-begin
-  Result := TZydisFormatterOperandFunc(Callbacks[ZYDIS_FORMATTER_HOOK_FORMAT_OPERAND_PTR])(
-    @Formatter, Str, Instruction, Operand, Self);
-end;
-
-function TZydisFormatter.DoFormatOperandReg(const Formatter: Zydis.TZydisFormatter;
-  var Str: TZydisString; const Instruction: TZydisDecodedInstruction;
-  const Operand: TZydisDecodedOperand): TZydisStatus;
-begin
-  Result := TZydisFormatterOperandFunc(Callbacks[ZYDIS_FORMATTER_HOOK_FORMAT_OPERAND_REG])(
-    @Formatter, Str, Instruction, Operand, Self);
-end;
-
-function TZydisFormatter.DoPostInstruction(const Formatter: Zydis.TZydisFormatter;
-  var Str: TZydisString; const Instruction: TZydisDecodedInstruction): TZydisStatus;
-begin
-  if (not Assigned(Callbacks[ZYDIS_FORMATTER_HOOK_POST_INSTRUCTION])) then
-  begin
-    Exit(ZYDIS_STATUS_SUCCESS);
-  end;
-  Result := TZydisFormatterFunc(Callbacks[ZYDIS_FORMATTER_HOOK_POST_INSTRUCTION])(
-    @Formatter, Str, Instruction, Self);
-end;
-
-function TZydisFormatter.DoPostOperand(const Formatter: Zydis.TZydisFormatter;
-  var Str: TZydisString; const Instruction: TZydisDecodedInstruction;
-  const Operand: TZydisDecodedOperand): TZydisStatus;
-begin
-  if (not Assigned(Callbacks[ZYDIS_FORMATTER_HOOK_POST_OPERAND])) then
-  begin
-    Exit(ZYDIS_STATUS_SUCCESS);
-  end;
-  Result := TZydisFormatterOperandFunc(Callbacks[ZYDIS_FORMATTER_HOOK_POST_OPERAND])(
-    @Formatter, Str, Instruction, Operand, Self);
-end;
-
-function TZydisFormatter.DoPreInstruction(const Formatter: Zydis.TZydisFormatter;
-  var Str: TZydisString; const Instruction: TZydisDecodedInstruction): TZydisStatus;
-begin
-  if (not Assigned(Callbacks[ZYDIS_FORMATTER_HOOK_PRE_INSTRUCTION])) then
-  begin
-    Exit(ZYDIS_STATUS_SUCCESS);
-  end;
-  Result := TZydisFormatterFunc(Callbacks[ZYDIS_FORMATTER_HOOK_PRE_INSTRUCTION])(
-    @Formatter, Str, Instruction, Self);
-end;
-
-function TZydisFormatter.DoPreOperand(const Formatter: Zydis.TZydisFormatter; var Str: TZydisString;
-  const Instruction: TZydisDecodedInstruction; const Operand: TZydisDecodedOperand): TZydisStatus;
-begin
-  if (not Assigned(Callbacks[ZYDIS_FORMATTER_HOOK_PRE_OPERAND])) then
-  begin
-    Exit(ZYDIS_STATUS_SUCCESS);
-  end;
-  Result := TZydisFormatterOperandFunc(Callbacks[ZYDIS_FORMATTER_HOOK_PRE_OPERAND])(
-    @Formatter, Str, Instruction, Operand, Self);
-end;
-
-function TZydisFormatter.DoPrintAddress(const Formatter: Zydis.TZydisFormatter;
-  var Str: TZydisString; const Instruction: TZydisDecodedInstruction;
-  const Operand: TZydisDecodedOperand; Address: ZydisU64): TZydisStatus;
-begin
-  Result := TZydisFormatterAddressFunc(Callbacks[ZYDIS_FORMATTER_HOOK_PRINT_ADDRESS])(
-    @Formatter, Str, Instruction, Operand, Address, Self);
-end;
-
-function TZydisFormatter.DoPrintDecorator(const Formatter: Zydis.TZydisFormatter;
-  var Str: TZydisString; const Instruction: TZydisDecodedInstruction;
-  const Operand: TZydisDecodedOperand; Decorator: TZydisDecoratorType): TZydisStatus;
-begin
-  Result := TZydisFormatterDecoratorFunc(Callbacks[ZYDIS_FORMATTER_HOOK_PRINT_DECORATOR])(
-    @Formatter, Str, Instruction, Operand, Decorator, Self);
-end;
-
-function TZydisFormatter.DoPrintDisp(const Formatter: Zydis.TZydisFormatter; var Str: TZydisString;
-  const Instruction: TZydisDecodedInstruction; const Operand: TZydisDecodedOperand): TZydisStatus;
-begin
-  Result := TZydisFormatterOperandFunc(Callbacks[ZYDIS_FORMATTER_HOOK_PRINT_DISP])(
-    @Formatter, Str, Instruction, Operand, Self);
-end;
-
-function TZydisFormatter.DoPrintImm(const Formatter: Zydis.TZydisFormatter; var Str: TZydisString;
-  const Instruction: TZydisDecodedInstruction; const Operand: TZydisDecodedOperand): TZydisStatus;
-begin
-  Result := TZydisFormatterOperandFunc(Callbacks[ZYDIS_FORMATTER_HOOK_PRINT_IMM])(
-    @Formatter, Str, Instruction, Operand, Self);
-end;
-
-function TZydisFormatter.DoPrintMemSize(const Formatter: Zydis.TZydisFormatter;
-  var Str: TZydisString; const Instruction: TZydisDecodedInstruction;
-  const Operand: TZydisDecodedOperand): TZydisStatus;
-begin
-  Result := TZydisFormatterOperandFunc(Callbacks[ZYDIS_FORMATTER_HOOK_PRINT_MEMSIZE])(
-    @Formatter, Str, Instruction, Operand, Self);
-end;
-
-function TZydisFormatter.DoPrintMnemonic(const Formatter: Zydis.TZydisFormatter;
-  var Str: TZydisString; const Instruction: TZydisDecodedInstruction): TZydisStatus;
-begin
-  Result := TZydisFormatterFunc(Callbacks[ZYDIS_FORMATTER_HOOK_PRINT_MNEMONIC])(
-    @Formatter, Str, Instruction, Self);
-end;
-
-function TZydisFormatter.DoPrintPrefixes(const Formatter: Zydis.TZydisFormatter;
-  var Str: TZydisString; const Instruction: TZydisDecodedInstruction): TZydisStatus;
-begin
-  Result := TZydisFormatterFunc(Callbacks[ZYDIS_FORMATTER_HOOK_PRINT_PREFIXES])(
-    @Formatter, Str, Instruction, Self);
-end;
-
-function TZydisFormatter.DoPrintRegister(const Formatter: Zydis.TZydisFormatter;
-  var Str: TZydisString; const Instruction: TZydisDecodedInstruction;
-  const Operand: TZydisDecodedOperand; Reg: TZydisRegister): TZydisStatus;
-begin
-  Result := TZydisFormatterRegisterFunc(Callbacks[ZYDIS_FORMATTER_HOOK_PRINT_REGISTER])(
-    @Formatter, Str, Instruction, Operand, Reg, Self);
-end;
-
-function TZydisFormatter.FormatInstruction(const Instruction: TZydisDecodedInstruction): String;
-const
-  STACK_BUFFER_LEN = 256;
-var
-  Status: TZydisStatus;
-  Buffer: array of AnsiChar;
-  BufferLen: ZydisUSize;
-  StackBuf: array[0..STACK_BUFFER_LEN - 1] of AnsiChar;
-  Data: Pointer;
-begin
-  BufferLen := STACK_BUFFER_LEN;
-  Status := ZydisFormatterFormatInstructionEx(@FContext, @Instruction, @StackBuf[0],
-    STACK_BUFFER_LEN, Self);
-  Data := @StackBuf[0];
-  while (Status = ZYDIS_STATUS_INSUFFICIENT_BUFFER_SIZE) do
-  begin
-    BufferLen := BufferLen * 2;
-    SetLength(Buffer, BufferLen);
-    Status := ZydisFormatterFormatInstructionEx(@FContext, @Instruction, @Buffer[0],
-      BufferLen, Self);
-    Data := @Buffer[0];
-  end;
-  if (not ZydisSuccess(Status)) then TZydisException.RaiseException(Status);
-  Result := String(PAnsiChar(Data));
-end;
-
-function TZydisFormatter.FormatOperand(const Instruction: TZydisDecodedInstruction;
-  Index: ZydisU8): String;
-const
-  STACK_BUFFER_LEN = 64;
-var
-  Status: TZydisStatus;
-  Buffer: array of AnsiChar;
-  BufferLen: ZydisUSize;
-  StackBuf: array[0..STACK_BUFFER_LEN - 1] of AnsiChar;
-  Data: Pointer;
-begin
-  BufferLen := STACK_BUFFER_LEN;
-  Status := ZydisFormatterFormatOperandEx(@FContext, @Instruction, Index, @StackBuf[0],
-    STACK_BUFFER_LEN, Self);
-  Data := @StackBuf[0];
-  while (Status = ZYDIS_STATUS_INSUFFICIENT_BUFFER_SIZE) do
-  begin
-    BufferLen := BufferLen * 2;
-    SetLength(Buffer, BufferLen);
-    Status := ZydisFormatterFormatOperandEx(@FContext, @Instruction, Index, @Buffer[0],
-      BufferLen, Self);
-    Data := @Buffer[0];
-  end;
-  if (not ZydisSuccess(Status)) then TZydisException.RaiseException(Status);
-  Result := String(PAnsiChar(Data));
-end;
-
-class function TZydisFormatter.InternalFormatInstruction(const Formatter: Zydis.TZydisFormatter;
-  var Str: TZydisString; const Instruction: TZydisDecodedInstruction;
-  UserData: TZydisFormatter): TZydisStatus;
-begin
-  Result := UserData.DoFormatInstruction(Formatter, Str, Instruction);
-end;
-
-class function TZydisFormatter.InternalFormatOperandImm(const Formatter: Zydis.TZydisFormatter;
-  var Str: TZydisString; const Instruction: TZydisDecodedInstruction;
-  const Operand: TZydisDecodedOperand; UserData: TZydisFormatter): TZydisStatus;
-begin
-  Result := UserData.DoFormatOperandImm(Formatter, Str, Instruction, Operand);
-end;
-
-class function TZydisFormatter.InternalFormatOperandMem(const Formatter: Zydis.TZydisFormatter;
-  var Str: TZydisString; const Instruction: TZydisDecodedInstruction;
-  const Operand: TZydisDecodedOperand; UserData: TZydisFormatter): TZydisStatus;
-begin
-  Result := UserData.DoFormatOperandMem(Formatter, Str, Instruction, Operand);
-end;
-
-class function TZydisFormatter.InternalFormatOperandPtr(const Formatter: Zydis.TZydisFormatter;
-  var Str: TZydisString; const Instruction: TZydisDecodedInstruction;
-  const Operand: TZydisDecodedOperand; UserData: TZydisFormatter): TZydisStatus;
-begin
-  Result := UserData.DoFormatOperandPtr(Formatter, Str, Instruction, Operand);
-end;
-
-class function TZydisFormatter.InternalFormatOperandReg(const Formatter: Zydis.TZydisFormatter;
-  var Str: TZydisString; const Instruction: TZydisDecodedInstruction;
-  const Operand: TZydisDecodedOperand; UserData: TZydisFormatter): TZydisStatus;
-begin
-  Result := UserData.DoFormatOperandReg(Formatter, Str, Instruction, Operand);
-end;
-
-class function TZydisFormatter.InternalPostInstruction(const Formatter: Zydis.TZydisFormatter;
-  var Str: TZydisString; const Instruction: TZydisDecodedInstruction;
-  UserData: TZydisFormatter): TZydisStatus;
-begin
-  Result := UserData.DoPostInstruction(Formatter, Str, Instruction);
-end;
-
-class function TZydisFormatter.InternalPostOperand(const Formatter: Zydis.TZydisFormatter;
-  var Str: TZydisString; const Instruction: TZydisDecodedInstruction;
-  const Operand: TZydisDecodedOperand; UserData: TZydisFormatter): TZydisStatus;
-begin
-  Result := UserData.DoPostOperand(Formatter, Str, Instruction, Operand);
-end;
-
-class function TZydisFormatter.InternalPreInstruction(const Formatter: Zydis.TZydisFormatter;
-  var Str: TZydisString; const Instruction: TZydisDecodedInstruction;
-  UserData: TZydisFormatter): TZydisStatus;
-begin
-  Result := UserData.DoPreInstruction(Formatter, Str, Instruction);
-end;
-
-class function TZydisFormatter.InternalPreOperand(const Formatter: Zydis.TZydisFormatter;
-  var Str: TZydisString; const Instruction: TZydisDecodedInstruction;
-  const Operand: TZydisDecodedOperand; UserData: TZydisFormatter): TZydisStatus;
-begin
-  Result := UserData.DoPreOperand(Formatter, Str, Instruction, Operand);
-end;
-
-class function TZydisFormatter.InternalPrintAddress(const Formatter: Zydis.TZydisFormatter;
-  var Str: TZydisString; const Instruction: TZydisDecodedInstruction;
-  const Operand: TZydisDecodedOperand; Address: ZydisU64; UserData: TZydisFormatter): TZydisStatus;
-begin
-  Result := UserData.DoPrintAddress(Formatter, Str, Instruction, Operand, Address);
-end;
-
-class function TZydisFormatter.InternalPrintDecorator(const Formatter: Zydis.TZydisFormatter;
-  var Str: TZydisString; const Instruction: TZydisDecodedInstruction;
-  const Operand: TZydisDecodedOperand; Decorator: TZydisDecoratorType;
-  UserData: TZydisFormatter): TZydisStatus;
-begin
-  Result := UserData.DoPrintDecorator(Formatter, Str, Instruction, Operand, Decorator);
-end;
-
-class function TZydisFormatter.InternalPrintDisp(const Formatter: Zydis.TZydisFormatter;
-  var Str: TZydisString; const Instruction: TZydisDecodedInstruction;
-  const Operand: TZydisDecodedOperand; UserData: TZydisFormatter): TZydisStatus;
-begin
-  Result := UserData.DoPrintDisp(Formatter, Str, Instruction, Operand);
-end;
-
-class function TZydisFormatter.InternalPrintImm(const Formatter: Zydis.TZydisFormatter;
-  var Str: TZydisString; const Instruction: TZydisDecodedInstruction;
-  const Operand: TZydisDecodedOperand; UserData: TZydisFormatter): TZydisStatus;
-begin
-  Result := UserData.DoPrintImm(Formatter, Str, Instruction, Operand);
-end;
-
-class function TZydisFormatter.InternalPrintMemSize(const Formatter: Zydis.TZydisFormatter;
-  var Str: TZydisString; const Instruction: TZydisDecodedInstruction;
-  const Operand: TZydisDecodedOperand; UserData: TZydisFormatter): TZydisStatus;
-begin
-  Result := UserData.DoPrintMemSize(Formatter, Str, Instruction, Operand);
-end;
-
-class function TZydisFormatter.InternalPrintMnemonic(const Formatter: Zydis.TZydisFormatter;
-  var Str: TZydisString; const Instruction: TZydisDecodedInstruction;
-  UserData: TZydisFormatter): TZydisStatus;
-begin
-  Result := UserData.DoPrintMnemonic(Formatter, Str, Instruction);
-end;
-
-class function TZydisFormatter.InternalPrintPrefixes(const Formatter: Zydis.TZydisFormatter;
-  var Str: TZydisString; const Instruction: TZydisDecodedInstruction;
-  UserData: TZydisFormatter): TZydisStatus;
-begin
-  Result := UserData.DoPrintPrefixes(Formatter, Str, Instruction);
-end;
-
-class function TZydisFormatter.InternalPrintRegister(const Formatter: Zydis.TZydisFormatter;
-  var Str: TZydisString; const Instruction: TZydisDecodedInstruction;
-  const Operand: TZydisDecodedOperand; Reg: TZydisRegister;
-  UserData: TZydisFormatter): TZydisStatus;
-begin
-  Result := UserData.DoPrintRegister(Formatter, Str, Instruction, Operand, Reg);
-end;
-
-procedure TZydisFormatter.SetAddressFormat(Value: TZydisAddressFormat);
-begin
-  SetProperty(ZYDIS_FORMATTER_PROP_ADDR_FORMAT, ZydisUPointer(Value));
-end;
-
-procedure TZydisFormatter.SetDisplacementFormat(Value: TZydisDisplacementFormat);
-begin
-  SetProperty(ZYDIS_FORMATTER_PROP_DISP_FORMAT, ZydisUPointer(Value));
-end;
-
-procedure TZydisFormatter.SetForceMemorySegments(Value: ZydisBool);
-begin
-  SetProperty(ZYDIS_FORMATTER_PROP_FORCE_MEMSEG, ZydisUPointer(Value));
-end;
-
-procedure TZydisFormatter.SetForceMemorySize(Value: ZydisBool);
-begin
-  SetProperty(ZYDIS_FORMATTER_PROP_FORCE_MEMSIZE, ZydisUPointer(Value));
-end;
-
-procedure TZydisFormatter.SetHexPaddingAddress(const Value: ZydisU8);
-begin
-  SetProperty(ZYDIS_FORMATTER_PROP_HEX_PADDING_ADDR, ZydisUPointer(Value));
-end;
-
-procedure TZydisFormatter.SetHexPaddingDisplacement(const Value: ZydisU8);
-begin
-  SetProperty(ZYDIS_FORMATTER_PROP_HEX_PADDING_DISP, ZydisUPointer(Value));
-end;
-
-procedure TZydisFormatter.SetHexPaddingImmediate(const Value: ZydisU8);
-begin
-  SetProperty(ZYDIS_FORMATTER_PROP_HEX_PADDING_IMM, ZydisUPointer(Value));
-end;
-
-procedure TZydisFormatter.SetHexPrefix(const Value: AnsiString);
-begin
-  FHexPrefix := Value;
-  SetProperty(ZYDIS_FORMATTER_PROP_HEX_PREFIX, ZydisUPointer(@FHexPrefix[1]));
-end;
-
-procedure TZydisFormatter.SetHexSuffix(const Value: AnsiString);
-begin
-  FHexSuffix := Value;
-  SetProperty(ZYDIS_FORMATTER_PROP_HEX_SUFFIX, ZydisUPointer(@FHexSuffix[1]));
-end;
-
-procedure TZydisFormatter.SetHexUppercase(Value: ZydisBool);
-begin
-  SetProperty(ZYDIS_FORMATTER_PROP_HEX_UPPERCASE, ZydisUPointer(Value));
-end;
-
-procedure TZydisFormatter.SetImmediateFormat(Value: TZydisImmediateFormat);
-begin
-  SetProperty(ZYDIS_FORMATTER_PROP_IMM_FORMAT, ZydisUPointer(Value));
-end;
-
-procedure TZydisFormatter.SetProperty(&Property: TZydisFormatterProperty; Value: ZydisUPointer);
-var
-  Status: TZydisStatus;
-begin
-  Status := ZydisFormatterSetProperty(FContext, &Property, Value);
-  if (not ZydisSuccess(Status)) then TZydisException.RaiseException(Status);
-end;
-
-procedure TZydisFormatter.SetUppercase(Value: ZydisBool);
-begin
-  SetProperty(ZYDIS_FORMATTER_PROP_UPPERCASE, ZydisUPointer(Value));
-end;
-
 end.
+
