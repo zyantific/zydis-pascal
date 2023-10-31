@@ -5,7 +5,8 @@ unit Zydis.Decoder;
 interface
 
 uses
-  Zydis.enums, Zydis.types;
+  Zydis.Enums,
+  Zydis.Types;
 
 
 Type

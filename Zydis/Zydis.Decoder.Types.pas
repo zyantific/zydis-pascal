@@ -32,8 +32,8 @@ unit Zydis.Decoder.Types;
 interface
 
 uses
-  Zydis.enums,
-  Zydis.types;
+  Zydis.Enums,
+  Zydis.Types;
 
 type
   // Defines the `ZydisOperandAttributes` data-type.

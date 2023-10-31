@@ -1,4 +1,4 @@
-unit zycore.allocator;
+unit Zycore.Allocator;
 
 {$IFDEF FPC}
   {$mode Delphi}{$H+}{$J-}
@@ -9,8 +9,8 @@ unit zycore.allocator;
 interface
 
 uses
-  Zydis.enums,
-  Zydis.types;
+  Zydis.Enums,
+  Zydis.Types;
 
 type
   // Pointer to TZyanAllocator

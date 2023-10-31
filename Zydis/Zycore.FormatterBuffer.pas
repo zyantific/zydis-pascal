@@ -1,4 +1,4 @@
-unit zycore.formatterbuffer;
+unit Zycore.FormatterBuffer;
 
 {$IFDEF FPC}
   {$mode Delphi}{$H+}{$J-}
@@ -8,9 +8,9 @@ unit zycore.formatterbuffer;
 interface
 
 uses
-  Zydis.enums,
-  Zydis.types,
-  Zycore.strings;
+  Zydis.Enums,
+  Zydis.Types,
+  Zycore.Strings;
 
 type
   { Defines the ZydisFormatterBuffer struct. }

@@ -8,10 +8,10 @@ unit Zydis.Formatter;
 interface
 
 uses
-  Zydis.enums,
-  Zydis.types,
+  Zydis.Enums,
+  Zydis.Types,
   Zycore.Strings,
-  zycore.formatterbuffer,
+  Zycore.FormatterBuffer,
   Zydis.Decoder.Types;
 
 type

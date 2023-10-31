@@ -8,9 +8,9 @@ unit Zycore.Strings;
 interface
 
 uses
-  Zydis.enums,
-  Zydis.types,
-  Zycore.vector;
+  Zydis.Enums,
+  Zydis.Types,
+  Zycore.Vector;
 
 type
 
