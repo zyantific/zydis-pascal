@@ -33,7 +33,7 @@ unit Zydis.Disassembler;
 interface
 
 uses
-  Zydis.types,
+  Zydis.Types,
   Zydis.Decoder.Types;
 
 type

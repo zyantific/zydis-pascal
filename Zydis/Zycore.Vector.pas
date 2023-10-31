@@ -1,4 +1,4 @@
-unit zycore.vector;
+unit Zycore.Vector;
 
 {$IFDEF FPC}
   {$mode Delphi}{$H+}{$J-}
@@ -8,9 +8,9 @@ unit zycore.vector;
 interface
 
 uses
-  Zydis.enums,
-  Zydis.types,
-  zycore.allocator;
+  Zydis.Enums,
+  Zydis.Types,
+  Zycore.Allocator;
 
 type
   { Defines the ZyanMemberProcedure function prototype. }

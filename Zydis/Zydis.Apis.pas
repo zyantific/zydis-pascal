@@ -22,7 +22,7 @@
 
 *******************************************************************************}
 
-unit Zydis.apis;
+unit Zydis.Apis;
 
 {$IFDEF FPC}
   {$MODE DELPHI}
@@ -32,7 +32,7 @@ unit Zydis.apis;
 interface
 
 uses
-  Zydis.enums,
+  Zydis.Enums,
   Zydis.Types,
   Zydis.Decoder,
   Zydis.Decoder.Types,

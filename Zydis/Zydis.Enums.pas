@@ -22,7 +22,7 @@
 
 *******************************************************************************}
 
-unit Zydis.enums;
+unit Zydis.Enums;
 
 {$IfDef FPC}
   {$mode delphi}
