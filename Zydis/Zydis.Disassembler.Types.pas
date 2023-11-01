@@ -21,10 +21,7 @@
  * SOFTWARE.
 
 *******************************************************************************}
-{
-  This unit will contain the high-level implementation for Disassembler
-}
-unit Zydis.Disassembler;
+unit Zydis.Disassembler.Types;
 
 {$IFDEF FPC}
   {$mode Delphi}
@@ -34,10 +31,22 @@ unit Zydis.Disassembler;
 interface
 
 uses
-  Zydis.Enums,
   Zydis.Types,
-  Zydis.Decoder.Types,
-  Zydis.Disassembler.Types;
+  Zydis.Decoder.Types;
+
+type
+  {
+   All commonly used information about a decoded instruction that Zydis can provide.
+   This structure is filled in by calling `ZydisDisassembleIntel` or `ZydisDisassembleATT`.
+  }
+  TZydisDisassembledInstruction = record
+    // The runtime address that was passed when disassembling the instruction.
+    runtime_address : ZyanU64;
+    info : TZydisDecodedInstruction;
+    operands : Array [1..ZYDIS_MAX_OPERAND_COUNT] of TZydisDecodedOperand;
+    text : Array [1..96] of Char;
+  end;
+  PZydisDisassembledInstruction = ^TZydisDisassembledInstruction;
 
 implementation
 
