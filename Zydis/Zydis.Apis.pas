@@ -1,4 +1,4 @@
-{*******************************************************************************
+{******************************************************************************
 
   Zydis Pascal API By Coldzer0
 
@@ -25,7 +25,6 @@
 unit Zydis.Apis;
 
 {$IFDEF FPC}
-  {$MODE DELPHI}
   {$PackRecords C}
 {$ENDIF}
 
@@ -35,9 +34,10 @@ uses
   Zydis.Enums,
   Zydis.Types,
   Zydis.Decoder,
+  Zydis.Encoder.Types,
   Zydis.Decoder.Types,
-  Zydis.Disassembler,
-  Zydis.Formatter;
+  Zydis.Formatter.Types,
+  Zydis.Disassembler.Types;
 
 
   {.$DEFINE Z_DYN_LINK}
@@ -81,6 +81,8 @@ const
   {$IFDEF CPUX64}
     {$IFDEF FPC}
       {$LinkLib libZydis.a}
+      {$LinkLib libZycore.a}
+
     {$ELSE}
       {$L 'Bin64/Decoder.obj'}
       {$L 'Bin64/DecoderData.obj'}
@@ -98,25 +100,25 @@ const
 
 
 
-{* ===========================================================================*}
-{* Constants
-{* ===========================================================================*}
+// ===========================================================================*}
+// Constants
+// ===========================================================================*}
 const
   ZYDIS_VERSION = $0004000000000000;
 
 
 
-{* -------------------------------------------------------------------------- *}
+// -------------------------------------------------------------------------- *}
 // Zydis Version APIs
-{* -------------------------------------------------------------------------- *}
+// -------------------------------------------------------------------------- *}
 procedure ZydisDecoderInit(decoder: PZydisDecoder; machine_mode: TZydisMachineMode;
   stack_width: TZydisStackWidth); cdecl; external
     {$IFDEF Z_DYN_LINK}Z_LIB_NAME{$ENDIF}
     Name _PREFIX + 'ZydisDecoderInit';
 
-{* -------------------------------------------------------------------------- *}
-{* Zydis Disassembler
-{* -------------------------------------------------------------------------- *}
+// -------------------------------------------------------------------------- *}
+// Zydis Disassembler
+// -------------------------------------------------------------------------- *}
 
 {
   Disassemble an instruction and format it to human-readable text in a single step (Intel syntax).
@@ -157,9 +159,9 @@ function ZydisDisassembleIntel(machine_mode: TZydisMachineMode;
   Name _PREFIX + 'ZydisDisassembleIntel';
 
 
-{* -------------------------------------------------------------------------- *}
-{* Zydis Decoder
-{* -------------------------------------------------------------------------- *}
+// -------------------------------------------------------------------------- *}
+// Zydis Decoder
+// -------------------------------------------------------------------------- *}
 
 
 {
@@ -200,9 +202,9 @@ function ZydisDecoderDecodeFull(const decoder: PZydisDecoder; const buffer: Poin
 
 
 
-{* -------------------------------------------------------------------------- *}
+// -------------------------------------------------------------------------- *}
 // Zydis Formatter APIs
-{* -------------------------------------------------------------------------- *}
+// -------------------------------------------------------------------------- *}
 
 {
   Initializes the given ZydisFormatter instance.
@@ -216,7 +218,7 @@ function ZydisFormatterInit(formatter: PZydisFormatter; style: TZydisFormatterSt
   {$IFDEF Z_DYN_LINK}Z_LIB_NAME{$ENDIF}
   Name _PREFIX + 'ZydisFormatterInit';
 
-  {**
+  {
    * Formats the given instruction and writes it into the output buffer.
    *
    * @param   formatter       A pointer to the `ZydisFormatter` instance.
@@ -233,7 +235,7 @@ function ZydisFormatterInit(formatter: PZydisFormatter; style: TZydisFormatterSt
    *
    * @return  A zyan status code.
    *}
-  function ZydisFormatterFormatInstruction(const formatter: TZydisFormatter;
+  function ZydisFormatterFormatInstruction(const formatter: PZydisFormatter;
       const instruction: PZydisDecodedInstruction; const operands: PZydisDecodedOperand;
       operand_count: ZyanU8; buffer: PAnsiChar; length: ZyanUSize;
       runtime_address: ZyanU64; user_data: Pointer): ZyanStatus; cdecl;external
@@ -241,10 +243,87 @@ function ZydisFormatterInit(formatter: PZydisFormatter; style: TZydisFormatterSt
   Name _PREFIX + 'ZydisFormatterFormatInstruction';
 
 
+// -------------------------------------------------------------------------- *}
+// Zydis Encoder APIs
+// -------------------------------------------------------------------------- *}
 
-{* -------------------------------------------------------------------------- *}
+{
+  Encodes instruction with semantics specified in encoder request structure.
+
+  @param   request     A pointer to the `TZydisEncoderRequest` record.
+  @param   buffer      A pointer to the output buffer receiving the encoded instruction.
+  @param   length      A pointer to the variable containing the length of the output buffer.
+                       Upon successful return, this variable receives the length of the encoded instruction.
+
+  @return  A Zyan status code.
+}
+function ZydisEncoderEncodeInstruction(const request: PZydisEncoderRequest;
+  buffer: Pointer; length: PZyanUSize): ZyanStatus; cdecl; external
+  {$IFDEF Z_DYN_LINK}Z_LIB_NAME{$ENDIF}
+  Name _PREFIX + 'ZydisEncoderEncodeInstruction';
+
+
+
+{$IfDef ZYDIS_LIBC}
+  // Zydis Memory APIs
+{
+  Returns the system page size.
+
+  @return  The system page size.
+}
+function ZyanMemoryGetSystemPageSize: ZyanU32; cdecl; external
+  {$IFDEF Z_DYN_LINK}Z_LIB_NAME{$ENDIF}
+  Name _PREFIX + 'ZyanMemoryGetSystemPageSize';
+
+{
+  Returns the system allocation granularity.
+
+  The system allocation granularity specifies the minimum amount of bytes which can be allocated
+  at a specific address by a single call of `ZyanMemoryVirtualAlloc`.
+
+  This value is typically 64KiB on Windows systems and equal to the page size on most POSIX
+  platforms.
+
+  @return  The system allocation granularity.
+}
+function ZyanMemoryGetSystemAllocationGranularity: ZyanU32; cdecl; external
+  {$IFDEF Z_DYN_LINK}Z_LIB_NAME{$ENDIF}
+  Name _PREFIX + 'ZyanMemoryGetSystemAllocationGranularity';
+
+{
+  Changes the memory protection value of one or more pages.
+
+  @param   address     The start address aligned to a page boundary.
+  @param   size        The size.
+  @param   protection  The new page protection value.
+
+  @return  A Zyan status code.
+}
+function ZyanMemoryVirtualProtect(address: Pointer; size: ZyanUSize;
+  protection: TZyanMemoryPageProtection): ZyanStatus; cdecl; external
+  {$IFDEF Z_DYN_LINK}Z_LIB_NAME{$ENDIF}
+  Name _PREFIX + 'ZyanMemoryVirtualProtect';
+
+{
+  Releases one or more memory pages starting at the given address.
+
+  @param   address The start address aligned to a page boundary.
+  @param   size    The size.
+
+  @return  A Zyan status code.
+}
+function ZyanMemoryVirtualFree(address: Pointer; size: ZyanUSize): ZyanStatus; cdecl; external
+  {$IFDEF Z_DYN_LINK}Z_LIB_NAME{$ENDIF}
+  Name _PREFIX + 'ZyanMemoryVirtualFree';
+
+{$EndIf}
+
+
+
+
+// -------------------------------------------------------------------------- *}
 // Zydis Version APIs                                                         *}
-{* -------------------------------------------------------------------------- *}
+// -------------------------------------------------------------------------- *}
 
 function ZydisGetVersion: ZyanU64; cdecl; external {$IFDEF Z_DYN_LINK}Z_LIB_NAME{$ENDIF}
   Name _PREFIX + 'ZydisGetVersion';
@@ -258,17 +337,15 @@ function ZydisVersionBuild(Version: ZyanU64): ZyanU16; inline;
 implementation
 
 function memset(dest: Pointer; val: integer; Count: PtrInt): Pointer; cdecl;
-  {$ifdef FPC}
- public name _PREFIX + 'memset';
-  {$endif}
+  {$ifdef FPC}public name _PREFIX + 'memset';{$endif}
 begin
   FillChar(dest^, Count, val);
   Result := dest;
 end;
 
-{* ---------------------------------------------------------------------------------------------- *}
-{* Zydis                                                                                          *}
-{* ---------------------------------------------------------------------------------------------- *}
+// -------------------------------------------------------------------------- *}
+// Zydis Version Utils Functions
+// -------------------------------------------------------------------------- *}
 
 function ZydisVersionMajor(Version: ZyanU64): ZyanU16;
 begin
