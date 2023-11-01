@@ -6,76 +6,67 @@
     <BuildModes Active="Release"/>
     <Units>
       <Unit>
-        <Filename Value="disassemblesimple.lpr"/>
+        <Filename Value="DisassembleSimple.dpr"/>
         <IsPartOfProject Value="True"/>
-        <UnitName Value="DisassembleSimple"/>
         <IsVisibleTab Value="True"/>
-        <CursorPos X="16" Y="6"/>
+        <CursorPos X="3" Y="16"/>
         <UsageCount Value="118"/>
         <Loaded Value="True"/>
       </Unit>
       <Unit>
-        <Filename Value="..\Zydis\zydis.disassembler.pas"/>
+        <Filename Value="..\Zydis\Zydis.Disassembler.pas"/>
         <IsPartOfProject Value="True"/>
-        <UnitName Value="Zydis.Disassembler"/>
-        <EditorIndex Value="3"/>
-        <TopLine Value="27"/>
-        <CursorPos X="3" Y="44"/>
+        <EditorIndex Value="8"/>
+        <CursorPos X="61" Y="2"/>
         <UsageCount Value="118"/>
         <Loaded Value="True"/>
       </Unit>
       <Unit>
-        <Filename Value="..\Zydis\zydis.decoder.types.pas"/>
+        <Filename Value="..\Zydis\Zydis.Decoder.Types.pas"/>
         <IsPartOfProject Value="True"/>
-        <UnitName Value="Zydis.Decoder.Types"/>
-        <EditorIndex Value="2"/>
-        <TopLine Value="278"/>
+        <EditorIndex Value="7"/>
         <CursorPos X="7" Y="310"/>
         <UsageCount Value="62"/>
         <Loaded Value="True"/>
       </Unit>
       <Unit>
-        <Filename Value="..\Zydis\zydis.sharedtypes.pas"/>
+        <Filename Value="..\Zydis\Zydis.Status.pas"/>
         <IsPartOfProject Value="True"/>
-        <UnitName Value="Zydis.SharedTypes"/>
-        <EditorIndex Value="-1"/>
-        <UsageCount Value="42"/>
-      </Unit>
-      <Unit>
-        <Filename Value="..\Zydis\zydis.status.pas"/>
-        <IsPartOfProject Value="True"/>
-        <UnitName Value="Zydis.Status"/>
-        <EditorIndex Value="5"/>
-        <TopLine Value="12"/>
+        <EditorIndex Value="13"/>
         <CursorPos X="17" Y="28"/>
         <UsageCount Value="42"/>
         <Loaded Value="True"/>
       </Unit>
       <Unit>
-        <Filename Value="..\Zydis\zydis.decoder.pas"/>
+        <Filename Value="..\Zydis\Zydis.Decoder.pas"/>
         <IsPartOfProject Value="True"/>
-        <UnitName Value="Zydis.Decoder"/>
         <EditorIndex Value="1"/>
+        <CursorPos X="81" Y="23"/>
         <UsageCount Value="20"/>
         <Loaded Value="True"/>
       </Unit>
       <Unit>
-        <Filename Value="..\Zydis\zydis.bind.pas"/>
+        <Filename Value="..\Zydis\Zydis.sharedtypes.pas"/>
+        <UnitName Value="Zydis.SharedTypes"/>
+        <EditorIndex Value="-1"/>
+        <UsageCount Value="42"/>
+      </Unit>
+      <Unit>
+        <Filename Value="..\Zydis\Zydis.bind.pas"/>
         <EditorIndex Value="-1"/>
         <CursorPos X="26" Y="11"/>
         <UsageCount Value="30"/>
       </Unit>
       <Unit>
-        <Filename Value="..\Zydis\Generated\zydis_bind.inc"/>
+        <Filename Value="..\Zydis\Generated\Zydis_bind.inc"/>
         <EditorIndex Value="-1"/>
         <TopLine Value="3176"/>
         <UsageCount Value="29"/>
       </Unit>
       <Unit>
-        <Filename Value="..\Zydis\zydis.types.pas"/>
+        <Filename Value="..\Zydis\Zydis.Types.pas"/>
         <UnitName Value="Zydis.types"/>
-        <EditorIndex Value="6"/>
-        <TopLine Value="13"/>
+        <EditorIndex Value="14"/>
         <CursorPos X="17" Y="28"/>
         <UsageCount Value="58"/>
         <Loaded Value="True"/>
@@ -112,15 +103,14 @@
         <UsageCount Value="53"/>
       </Unit>
       <Unit>
-        <Filename Value="..\Zydis\Generated\zydis_enums.inc"/>
+        <Filename Value="..\Zydis\Generated\Zydis_enums.inc"/>
         <EditorIndex Value="-1"/>
         <CursorPos Y="6"/>
         <UsageCount Value="22"/>
       </Unit>
       <Unit>
-        <Filename Value="..\Zydis\zydis.enums.pas"/>
-        <UnitName Value="Zydis.enums"/>
-        <EditorIndex Value="4"/>
+        <Filename Value="..\Zydis\Zydis.Enums.pas"/>
+        <EditorIndex Value="10"/>
         <CursorPos Y="24"/>
         <UsageCount Value="29"/>
         <Loaded Value="True"/>
@@ -147,155 +137,208 @@
       </Unit>
       <Unit>
         <Filename Value="..\Zydis\Zydis.Formatter.pas"/>
+        <EditorIndex Value="11"/>
+        <CursorPos X="81" Y="23"/>
+        <UsageCount Value="10"/>
+        <Loaded Value="True"/>
+      </Unit>
+      <Unit>
+        <Filename Value="..\..\Zydis-pascal\Zydis\Zydis.bind.pas"/>
         <EditorIndex Value="-1"/>
         <UsageCount Value="9"/>
       </Unit>
       <Unit>
-        <Filename Value="..\..\zydis-pascal\Zydis\zydis.bind.pas"/>
+        <Filename Value="..\..\Zydis-pascal\Zydis\Zydis.Decoder.pas"/>
         <EditorIndex Value="-1"/>
         <UsageCount Value="9"/>
       </Unit>
       <Unit>
-        <Filename Value="..\..\zydis-pascal\Zydis\Zydis.Decoder.pas"/>
-        <EditorIndex Value="-1"/>
-        <UsageCount Value="9"/>
-      </Unit>
-      <Unit>
-        <Filename Value="..\..\zydis-pascal\Zydis\Zydis.Exception.pas"/>
+        <Filename Value="..\..\Zydis-pascal\Zydis\Zydis.Exception.pas"/>
         <EditorIndex Value="-1"/>
         <TopLine Value="4"/>
         <UsageCount Value="9"/>
       </Unit>
       <Unit>
-        <Filename Value="..\..\zydis-pascal\Zydis\Zydis.Formatter.pas"/>
+        <Filename Value="..\..\Zydis-pascal\Zydis\Zydis.Formatter.pas"/>
         <EditorIndex Value="-1"/>
         <TopLine Value="28"/>
         <UsageCount Value="9"/>
       </Unit>
       <Unit>
-        <Filename Value="..\..\zydis-pascal\Zydis\Zydis.pas"/>
+        <Filename Value="..\..\Zydis-pascal\Zydis\Zydis.pas"/>
         <EditorIndex Value="-1"/>
         <TopLine Value="16"/>
         <CursorPos X="3" Y="34"/>
         <UsageCount Value="9"/>
       </Unit>
+      <Unit>
+        <Filename Value="..\Zydis\Zycore.Allocator.pas"/>
+        <EditorIndex Value="2"/>
+        <CursorPos X="81" Y="23"/>
+        <UsageCount Value="10"/>
+        <Loaded Value="True"/>
+      </Unit>
+      <Unit>
+        <Filename Value="..\Zydis\Zycore.FormatterBuffer.pas"/>
+        <EditorIndex Value="3"/>
+        <CursorPos X="81" Y="23"/>
+        <UsageCount Value="10"/>
+        <Loaded Value="True"/>
+      </Unit>
+      <Unit>
+        <Filename Value="..\Zydis\Zycore.Strings.pas"/>
+        <EditorIndex Value="4"/>
+        <CursorPos X="81" Y="23"/>
+        <UsageCount Value="10"/>
+        <Loaded Value="True"/>
+      </Unit>
+      <Unit>
+        <Filename Value="..\Zydis\Zycore.Vector.pas"/>
+        <EditorIndex Value="5"/>
+        <CursorPos X="81" Y="23"/>
+        <UsageCount Value="10"/>
+        <Loaded Value="True"/>
+      </Unit>
+      <Unit>
+        <Filename Value="..\Zydis\Zydis.Apis.pas"/>
+        <EditorIndex Value="6"/>
+        <UsageCount Value="10"/>
+        <Loaded Value="True"/>
+      </Unit>
+      <Unit>
+        <Filename Value="..\Zydis\Zydis.Disassembler.Types.pas"/>
+        <EditorIndex Value="9"/>
+        <UsageCount Value="10"/>
+        <Loaded Value="True"/>
+      </Unit>
+      <Unit>
+        <Filename Value="..\Zydis\Zydis.Formatter.Types.pas"/>
+        <EditorIndex Value="12"/>
+        <CursorPos X="81" Y="23"/>
+        <UsageCount Value="10"/>
+        <Loaded Value="True"/>
+      </Unit>
     </Units>
     <JumpHistory HistoryIndex="28">
       <Position>
-        <Filename Value="disassemblesimple.lpr"/>
-        <Caret Line="40" TopLine="12"/>
-      </Position>
-      <Position>
-        <Filename Value="disassemblesimple.lpr"/>
+        <Filename Value="DisassembleSimple.dpr"/>
         <Caret Line="41" TopLine="12"/>
       </Position>
       <Position>
-        <Filename Value="disassemblesimple.lpr"/>
-        <Caret Line="42" TopLine="12"/>
-      </Position>
-      <Position>
-        <Filename Value="disassemblesimple.lpr"/>
-        <Caret Line="41" TopLine="12"/>
-      </Position>
-      <Position>
-        <Filename Value="disassemblesimple.lpr"/>
+        <Filename Value="DisassembleSimple.dpr"/>
         <Caret Line="36" TopLine="12"/>
       </Position>
       <Position>
-        <Filename Value="disassemblesimple.lpr"/>
+        <Filename Value="DisassembleSimple.dpr"/>
         <Caret Line="38" TopLine="12"/>
       </Position>
       <Position>
-        <Filename Value="disassemblesimple.lpr"/>
+        <Filename Value="DisassembleSimple.dpr"/>
         <Caret Line="39" TopLine="12"/>
       </Position>
       <Position>
-        <Filename Value="disassemblesimple.lpr"/>
+        <Filename Value="DisassembleSimple.dpr"/>
         <Caret Line="40" TopLine="12"/>
       </Position>
       <Position>
-        <Filename Value="disassemblesimple.lpr"/>
+        <Filename Value="DisassembleSimple.dpr"/>
         <Caret Line="41" TopLine="12"/>
       </Position>
       <Position>
-        <Filename Value="disassemblesimple.lpr"/>
+        <Filename Value="DisassembleSimple.dpr"/>
         <Caret Line="42" TopLine="12"/>
       </Position>
       <Position>
-        <Filename Value="disassemblesimple.lpr"/>
+        <Filename Value="DisassembleSimple.dpr"/>
         <Caret Line="41" TopLine="12"/>
       </Position>
       <Position>
-        <Filename Value="disassemblesimple.lpr"/>
+        <Filename Value="DisassembleSimple.dpr"/>
         <Caret Line="36" TopLine="12"/>
       </Position>
       <Position>
-        <Filename Value="disassemblesimple.lpr"/>
+        <Filename Value="DisassembleSimple.dpr"/>
         <Caret Line="38" TopLine="12"/>
       </Position>
       <Position>
-        <Filename Value="disassemblesimple.lpr"/>
+        <Filename Value="DisassembleSimple.dpr"/>
         <Caret Line="39" TopLine="12"/>
       </Position>
       <Position>
-        <Filename Value="disassemblesimple.lpr"/>
+        <Filename Value="DisassembleSimple.dpr"/>
         <Caret Line="40" TopLine="12"/>
       </Position>
       <Position>
-        <Filename Value="disassemblesimple.lpr"/>
+        <Filename Value="DisassembleSimple.dpr"/>
         <Caret Line="41" TopLine="12"/>
       </Position>
       <Position>
-        <Filename Value="disassemblesimple.lpr"/>
+        <Filename Value="DisassembleSimple.dpr"/>
         <Caret Line="42" TopLine="12"/>
       </Position>
       <Position>
-        <Filename Value="disassemblesimple.lpr"/>
+        <Filename Value="DisassembleSimple.dpr"/>
         <Caret Line="4" Column="13"/>
       </Position>
       <Position>
-        <Filename Value="disassemblesimple.lpr"/>
+        <Filename Value="DisassembleSimple.dpr"/>
         <Caret Line="15" Column="101"/>
       </Position>
       <Position>
-        <Filename Value="disassemblesimple.lpr"/>
+        <Filename Value="DisassembleSimple.dpr"/>
         <Caret Line="22" Column="12"/>
       </Position>
       <Position>
-        <Filename Value="disassemblesimple.lpr"/>
+        <Filename Value="DisassembleSimple.dpr"/>
         <Caret Line="22" Column="12"/>
       </Position>
       <Position>
-        <Filename Value="disassemblesimple.lpr"/>
+        <Filename Value="DisassembleSimple.dpr"/>
         <Caret Line="5" Column="13"/>
       </Position>
       <Position>
-        <Filename Value="disassemblesimple.lpr"/>
+        <Filename Value="DisassembleSimple.dpr"/>
         <Caret Line="20" Column="3" TopLine="10"/>
       </Position>
       <Position>
-        <Filename Value="..\Zydis\zydis.disassembler.pas"/>
+        <Filename Value="..\Zydis\Zydis.disassembler.pas"/>
         <Caret Line="44" Column="3" TopLine="27"/>
       </Position>
       <Position>
-        <Filename Value="disassemblesimple.lpr"/>
+        <Filename Value="DisassembleSimple.dpr"/>
         <Caret Line="28" Column="31" TopLine="15"/>
       </Position>
       <Position>
-        <Filename Value="disassemblesimple.lpr"/>
+        <Filename Value="DisassembleSimple.dpr"/>
         <Caret Line="49" Column="22" TopLine="18"/>
       </Position>
       <Position>
-        <Filename Value="..\Zydis\zydis.decoder.types.pas"/>
+        <Filename Value="..\Zydis\Zydis.decoder.types.pas"/>
         <Caret Line="310" Column="7" TopLine="278"/>
       </Position>
       <Position>
-        <Filename Value="disassemblesimple.lpr"/>
+        <Filename Value="DisassembleSimple.dpr"/>
         <Caret Line="8" Column="35" TopLine="7"/>
       </Position>
       <Position>
-        <Filename Value="disassemblesimple.lpr"/>
+        <Filename Value="DisassembleSimple.dpr"/>
         <Caret Line="15" Column="21" TopLine="6"/>
+      </Position>
+      <Position>
+        <Filename Value="DisassembleSimple.dpr"/>
+        <Caret Line="6" Column="29"/>
+      </Position>
+      <Position>
+        <Filename Value="DisassembleSimple.dpr"/>
+        <Caret Line="15" Column="23"/>
+      </Position>
+      <Position>
+        <Filename Value="DisassembleSimple.dpr"/>
+        <Caret Line="16" Column="22"/>
+      </Position>
+      <Position>
+        <Filename Value="..\Zydis\Zydis.Disassembler.pas"/>
+        <Caret TopLine="14"/>
       </Position>
     </JumpHistory>
     <RunParams>

@@ -69,7 +69,7 @@
           </Target>
           <SearchPaths>
             <IncludeFiles Value="$(ProjOutDir)"/>
-            <Libraries Value="..\libs"/>
+            <Libraries Value="..\libs\FPC\x64"/>
             <OtherUnitFiles Value="..\Zydis"/>
             <UnitOutputDirectory Value="lib\$(TargetCPU)-$(TargetOS)"/>
           </SearchPaths>
@@ -108,34 +108,24 @@
     </RunParams>
     <Units>
       <Unit>
-        <Filename Value="disassemblesimple.lpr"/>
+        <Filename Value="DisassembleSimple.dpr"/>
         <IsPartOfProject Value="True"/>
-        <UnitName Value="DisassembleSimple"/>
       </Unit>
       <Unit>
-        <Filename Value="..\Zydis\zydis.disassembler.pas"/>
+        <Filename Value="..\Zydis\Zydis.Disassembler.pas"/>
         <IsPartOfProject Value="True"/>
-        <UnitName Value="Zydis.Disassembler"/>
       </Unit>
       <Unit>
-        <Filename Value="..\Zydis\zydis.decoder.types.pas"/>
+        <Filename Value="..\Zydis\Zydis.Decoder.Types.pas"/>
         <IsPartOfProject Value="True"/>
-        <UnitName Value="Zydis.Decoder.Types"/>
       </Unit>
       <Unit>
-        <Filename Value="..\Zydis\zydis.sharedtypes.pas"/>
+        <Filename Value="..\Zydis\Zydis.Status.pas"/>
         <IsPartOfProject Value="True"/>
-        <UnitName Value="Zydis.SharedTypes"/>
       </Unit>
       <Unit>
-        <Filename Value="..\Zydis\zydis.status.pas"/>
+        <Filename Value="..\Zydis\Zydis.Decoder.pas"/>
         <IsPartOfProject Value="True"/>
-        <UnitName Value="Zydis.Status"/>
-      </Unit>
-      <Unit>
-        <Filename Value="..\Zydis\zydis.decoder.pas"/>
-        <IsPartOfProject Value="True"/>
-        <UnitName Value="Zydis.Decoder"/>
       </Unit>
     </Units>
   </ProjectOptions>
@@ -143,7 +133,7 @@
     <Version Value="11"/>
     <PathDelim Value="\"/>
     <Target>
-      <Filename Value="disassemblesimple"/>
+      <Filename Value="DisassembleSimple"/>
     </Target>
     <SearchPaths>
       <IncludeFiles Value="$(ProjOutDir)"/>

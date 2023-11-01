@@ -2,6 +2,7 @@
   Zydis DisassembleSimple Example By Coldzer0
 }
 program DisassembleSimple;
+
 {$IFDEF FPC}
   {$mode Delphi}{$H+}{$J-}
 {$ENDIF}
@@ -12,7 +13,7 @@ uses
   Zydis.enums,
   Zydis.types,
   Zydis.Status,
-  Zydis.Disassembler;
+  Zydis.Disassembler.Types;
 
 var
   offset : ZyanUSize;
