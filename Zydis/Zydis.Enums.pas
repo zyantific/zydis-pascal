@@ -32,8 +32,35 @@ unit Zydis.Enums;
 {$ENDIF}
 
 interface
+uses
+  {$IfDef UNIX}
+  BaseUnix
+  {$Else}
+  Windows
+  {$EndIf};
 
 {$I Generated/zydis_enums.inc}
+
+{
+  Defines the `TZyanMemoryPageProtection` enum.
+}
+type
+  TZyanMemoryPageProtection = (
+    {$IFDEF WINDOWS}
+    ZYAN_PAGE_READONLY = PAGE_READONLY,
+    ZYAN_PAGE_READWRITE = PAGE_READWRITE,
+    ZYAN_PAGE_EXECUTE = PAGE_EXECUTE,
+    ZYAN_PAGE_EXECUTE_READ = PAGE_EXECUTE_READ,
+    ZYAN_PAGE_EXECUTE_READWRITE = PAGE_EXECUTE_READWRITE
+    {$ENDIF}
+    {$IFDEF UNIX}
+    ZYAN_PAGE_READONLY = PROT_READ,
+    ZYAN_PAGE_READWRITE = PROT_READ or PROT_WRITE,
+    ZYAN_PAGE_EXECUTE = PROT_EXEC,
+    ZYAN_PAGE_EXECUTE_READ = PROT_EXEC or PROT_READ,
+    ZYAN_PAGE_EXECUTE_READWRITE = PROT_EXEC or PROT_READ or PROT_WRITE
+    {$ENDIF}
+  );
 
 implementation
 end.
