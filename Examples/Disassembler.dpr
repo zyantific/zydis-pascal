@@ -4,20 +4,19 @@
 program Disassembler;
 
 {$IFDEF FPC}
-  {$mode Delphi}{$H+}{$J-}
+  {$mode Delphi}
   {$PackRecords C}
 {$ENDIF}
 
 uses
   SysUtils,
-  Zydis.apis,
-  Zydis.enums,
-  Zydis.types,
+  Zydis.Apis,
+  Zydis.Enums,
+  Zydis.Types,
   Zydis.Status,
-  Zydis.Disassembler,
-  zydis.decoder,
-  zydis.decoder.Types,
-  zydis.formatter;
+  Zydis.Decoder.Types,
+  Zydis.Formatter.Types,
+  Zydis.Disassembler.Types;
 
 var
   offset : ZyanUSize = 0;
@@ -27,7 +26,7 @@ var
   Formatter : TZydisFormatter;
   instruction : TZydisDecodedInstruction;
 
-  operands : Array [1..ZYDIS_MAX_OPERAND_COUNT] of TZydisDecodedOperand;
+  operands : Array [0..ZYDIS_MAX_OPERAND_COUNT -1] of TZydisDecodedOperand;
 
   length : ZyanUSize;
 
@@ -43,6 +42,7 @@ begin
 
   Initialize(operands);
   Initialize(instruction);
+  Initialize(buffer);
 
   length := sizeof(data);
   while ZYAN_SUCCESS(ZydisDecoderDecodeFull(@decoder, @data[offset], length - offset,
@@ -52,14 +52,14 @@ begin
     Write(Format('%.16X  ', [runtime_address]));
 
     // Format & print the binary instruction structure to human-readable format
-    ZydisFormatterFormatInstruction(formatter, @instruction, @operands,
+    ZydisFormatterFormatInstruction(@formatter, @instruction, @operands,
         instruction.operand_count_visible, buffer, SizeOf(buffer), runtime_address, nil);
+
     WriteLn(buffer);
 
     offset += instruction.length;
     runtime_address += instruction.length;
   end;
-
 
   ReadLn;
 end.
