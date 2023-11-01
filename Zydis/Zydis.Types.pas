@@ -22,7 +22,7 @@
 
 *******************************************************************************}
 
-unit Zydis.types;
+unit Zydis.Types;
 
 {$IfDef FPC}
   {$mode delphi}
@@ -32,6 +32,12 @@ unit Zydis.types;
 interface
 
 Type
+  {$ifdef CPU64}
+  SIZE_T = QWord;
+  {$else CPU64}
+  SIZE_T = DWord;
+  {$endif CPU64}
+
   ZyanU8       = UInt8;
   ZyanU16      = UInt16;
   ZyanU32      = UInt32;
@@ -45,6 +51,20 @@ Type
   ZyanUPointer = UIntPtr;
   ZyanIPointer = IntPtr;
   ZyanBool     = ZyanU8;
+
+  PZyanU8 = ^ZyanU8;
+  PZyanU16 = ^ZyanU16;
+  PZyanU32 = ^ZyanU32;
+  PZyanU64 = ^ZyanU64;
+  PZyanI8 = ^ZyanI8;
+  PZyanI16 = ^ZyanI16;
+  PZyanI32 = ^ZyanI32;
+  PZyanI64 = ^ZyanI64;
+  PZyanUSize = ^ZyanUSize;
+  PZyanISize = ^ZyanISize;
+  PZyanUPointer = ^ZyanUPointer;
+  PZyanIPointer = ^ZyanIPointer;
+  PZyanBool = ^ZyanBool;
 
 {$I stdinth.inc} // Taken from fpcsrc\packages\libc\src\stdinth.inc
 
@@ -239,7 +259,6 @@ Type
 
 Type
   TZyanStringFlags = ZyanU8;
-
 
 const
   ZYAN_NULL = nil;
