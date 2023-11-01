@@ -32,12 +32,6 @@ unit Zydis.Types;
 interface
 
 Type
-  {$ifdef CPU64}
-  SIZE_T = QWord;
-  {$else CPU64}
-  SIZE_T = DWord;
-  {$endif CPU64}
-
   ZyanU8       = UInt8;
   ZyanU16      = UInt16;
   ZyanU32      = UInt32;
@@ -46,7 +40,7 @@ Type
   ZyanI16      = Int16;
   ZyanI32      = Int32;
   ZyanI64      = Int64;
-  ZyanUSize    = SIZE_T;
+  ZyanUSize    = PtrUInt;
   ZyanISize    = int64;
   ZyanUPointer = UIntPtr;
   ZyanIPointer = IntPtr;
