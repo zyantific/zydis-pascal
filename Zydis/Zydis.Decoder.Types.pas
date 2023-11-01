@@ -396,16 +396,16 @@ type
   end;
   PZydisDecodedOperand = ^TZydisDecodedOperand;
 
+
+  // Defines the `ZydisDecoder` struct.
+  TZydisDecoder = record
+    machine_mode : TZydisMachineMode; // The machine mode.
+    stack_width : TZydisStackWidth; // The stack width.
+    decoder_mode : ZyanU32; // The decoder mode bitmap.
+  end; // TZydisDecoder
+  PZydisDecoder = ^TZydisDecoder;
+
 implementation
-
-initialization
-  // testing sizes
-  //WriteLn('TZydisDecodedInstruction = ', SizeOf(TZydisDecodedInstruction));
-  //WriteLn('TZydisDecodedInstructionAvx = ', SizeOf(TZydisDecodedInstructionAvx));
-  //WriteLn('TZydisDecodedInstructionMeta = ', SizeOf(TZydisDecodedInstructionMeta));
-
-
-
 
 end.
 
