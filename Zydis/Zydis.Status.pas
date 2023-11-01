@@ -46,6 +46,7 @@ const { Module IDs }
 
   function ZYAN_MAKE_STATUS(error, module, code : ZyanU32): ZyanStatus;
   function ZYAN_SUCCESS(status : ZyanStatus): Boolean;
+  function ZYAN_FAILED(status: ZyanStatus): Boolean;
   function ZYAN_STATUS_MODULE(Status : ZyanStatus): ZyanStatus;
   function ZYAN_STATUS_CODE(Status : ZyanStatus): ZyanStatus;
 
@@ -78,6 +79,19 @@ function ZYAN_SUCCESS(status : ZyanStatus): Boolean;
 begin
   Result := (status and $80000000) = 0;
 end;
+
+{
+  Checks if a Zyan operation failed.
+
+  @param status The Zyan status code to check.
+
+  @return True if the operation failed, False if not.
+}
+function ZYAN_FAILED(status: ZyanStatus): Boolean;
+begin
+  Result := (status and $80000000) <> 0;
+end;
+
 
 {
 * Returns the module id of a zyan status-code.
