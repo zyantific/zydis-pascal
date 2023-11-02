@@ -3,15 +3,15 @@
   <ProjectSession>
     <PathDelim Value="\"/>
     <Version Value="12"/>
-    <BuildModes Active="Linux_Release64"/>
+    <BuildModes Active="Windows_Release64"/>
     <Units>
       <Unit>
         <Filename Value="EncodeFromScratch.dpr"/>
         <IsPartOfProject Value="True"/>
         <IsVisibleTab Value="True"/>
-        <TopLine Value="76"/>
-        <CursorPos X="36" Y="85"/>
-        <UsageCount Value="26"/>
+        <TopLine Value="88"/>
+        <CursorPos X="19" Y="5"/>
+        <UsageCount Value="29"/>
         <Loaded Value="True"/>
       </Unit>
       <Unit>
@@ -20,21 +20,21 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="36"/>
         <CursorPos X="28" Y="48"/>
-        <UsageCount Value="25"/>
+        <UsageCount Value="28"/>
       </Unit>
       <Unit>
         <Filename Value="F:\FPCross\fpcsrc\rtl\inc\systemh.inc"/>
         <EditorIndex Value="-1"/>
         <TopLine Value="522"/>
-        <CursorPos X="3" Y="537"/>
-        <UsageCount Value="11"/>
+        <CursorPos X="20" Y="539"/>
+        <UsageCount Value="12"/>
       </Unit>
       <Unit>
         <Filename Value="..\Zydis\Zydis.Types.pas"/>
         <EditorIndex Value="-1"/>
-        <TopLine Value="21"/>
-        <CursorPos X="3" Y="36"/>
-        <UsageCount Value="12"/>
+        <TopLine Value="55"/>
+        <CursorPos X="5" Y="34"/>
+        <UsageCount Value="13"/>
       </Unit>
       <Unit>
         <Filename Value="..\Zydis\Zydis.Status.pas"/>
@@ -73,11 +73,10 @@
       </Unit>
       <Unit>
         <Filename Value="..\Zydis\Zydis.Enums.pas"/>
-        <EditorIndex Value="1"/>
+        <EditorIndex Value="-1"/>
         <TopLine Value="39"/>
         <CursorPos X="13" Y="43"/>
-        <UsageCount Value="12"/>
-        <Loaded Value="True"/>
+        <UsageCount Value="13"/>
       </Unit>
       <Unit>
         <Filename Value="F:\FPCross\fpcsrc\rtl\unix\bunxh.inc"/>
@@ -87,23 +86,7 @@
         <UsageCount Value="10"/>
       </Unit>
     </Units>
-    <JumpHistory HistoryIndex="28">
-      <Position>
-        <Filename Value="EncodeFromScratch.dpr"/>
-        <Caret Line="88" TopLine="71"/>
-      </Position>
-      <Position>
-        <Filename Value="EncodeFromScratch.dpr"/>
-        <Caret Line="89" TopLine="71"/>
-      </Position>
-      <Position>
-        <Filename Value="EncodeFromScratch.dpr"/>
-        <Caret Line="88" TopLine="71"/>
-      </Position>
-      <Position>
-        <Filename Value="EncodeFromScratch.dpr"/>
-        <Caret Line="89" TopLine="71"/>
-      </Position>
+    <JumpHistory HistoryIndex="23">
       <Position>
         <Filename Value="EncodeFromScratch.dpr"/>
         <Caret Line="88" TopLine="71"/>
@@ -190,10 +173,6 @@
       </Position>
       <Position>
         <Filename Value="EncodeFromScratch.dpr"/>
-        <Caret Line="86" Column="84" TopLine="91"/>
-      </Position>
-      <Position>
-        <Filename Value="EncodeFromScratch.dpr"/>
         <Caret Line="100" Column="65" TopLine="86"/>
       </Position>
       <Position>
@@ -201,12 +180,8 @@
         <Caret Line="104" Column="41" TopLine="86"/>
       </Position>
       <Position>
-        <Filename Value="..\Zydis\Zydis.Enums.pas"/>
-        <Caret Line="54" Column="57" TopLine="39"/>
-      </Position>
-      <Position>
         <Filename Value="EncodeFromScratch.dpr"/>
-        <Caret Line="77" Column="26" TopLine="60"/>
+        <Caret Column="26"/>
       </Position>
     </JumpHistory>
     <RunParams>

@@ -7,6 +7,9 @@ program Disassembler;
   {$mode Delphi}
   {$PackRecords C}
 {$ENDIF}
+{$IfDef MSWINDOWS}
+  {$APPTYPE CONSOLE}
+{$EndIf}
 
 uses
   SysUtils,
@@ -57,8 +60,8 @@ begin
 
     WriteLn(buffer);
 
-    offset += instruction.length;
-    runtime_address += instruction.length;
+    Inc(offset, instruction.length);
+    inc(runtime_address, instruction.length);
   end;
 
   ReadLn;

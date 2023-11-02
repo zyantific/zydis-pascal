@@ -1,5 +1,10 @@
 program EncodeFromScratch;
 
+{$IfDef MSWINDOWS}
+  {$APPTYPE CONSOLE}
+{$EndIf}
+
+
 uses
   {$IfDef UNIX}
   BaseUnix,
@@ -75,7 +80,7 @@ var
   length: ZyanUSize;
   func_ptr: TRetFunc;
   Result: ZyanU64;
-  {$IfDef WINDOWS}OldProtection: DWORD;{$EndIf}
+  {$IfDef MSWINDOWS}OldProtection: DWORD;{$EndIf}
   i: integer;
 begin
   // Allocate 2 pages of memory. We won't need nearly as much, but it simplifies
@@ -90,7 +95,7 @@ begin
   // Print a hex-dump of the assembled code.
   WriteLn('Created byte-code:');
   for i := 0 to length - 1 do
-    Write(Format('%.2X ', [buffer[i]]));
+    Write(Format('%.2X ', [TBytes(buffer)[i]]));
   WriteLn;
 
   {$IFDEF CPUX64}
