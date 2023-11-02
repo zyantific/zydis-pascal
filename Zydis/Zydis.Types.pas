@@ -30,6 +30,10 @@ unit Zydis.Types;
 {$ENDIF}
 
 interface
+{$IfNDef FPC}
+  uses
+    windows;
+{$ENDIF}
 
 Type
   ZyanU8       = UInt8;
@@ -40,7 +44,7 @@ Type
   ZyanI16      = Int16;
   ZyanI32      = Int32;
   ZyanI64      = Int64;
-  ZyanUSize    = PtrUInt;
+  ZyanUSize    = UIntPtr;
   ZyanISize    = int64;
   ZyanUPointer = UIntPtr;
   ZyanIPointer = IntPtr;

@@ -44,7 +44,7 @@ type
     runtime_address : ZyanU64;
     info : TZydisDecodedInstruction;
     operands : Array [1..ZYDIS_MAX_OPERAND_COUNT] of TZydisDecodedOperand;
-    text : Array [1..96] of Char;
+    text : Array [1..96] of Byte;
   end;
   PZydisDisassembledInstruction = ^TZydisDisassembledInstruction;
 

@@ -40,8 +40,11 @@ uses
   Zydis.Disassembler.Types;
 
 
-  {.$DEFINE Z_DYN_LINK}
-  {$IFDEF Z_DYN_LINK}
+{$IFNDEF FPC}
+  {$DEFINE Z_DYN_LINK}
+{$ENDIF}
+
+{$IFDEF Z_DYN_LINK}
 const
   {$IFDEF CPUX86}
   Z_LIB_NAME = 'Zydis32.dll';
@@ -50,22 +53,22 @@ const
   Z_LIB_NAME = 'Zydis64.dll';
   {$ENDIF}
   _PREFIX = '';
-  {$ELSE}
+{$ELSE}
 
 const
-  {$ifdef OSWINDOWS}
-    {$ifdef CPU64}
+  {$ifdef MSWINDOWS}
+    {$ifdef CPUX64}
       _PREFIX = '';
     {$else}
       _PREFIX = '_';
-    {$endif CPU64}
+    {$endif CPUX64}
   {$else}
   {$ifdef OSDARWIN}
-        _PREFIX = '_';
+      _PREFIX = '_';
   {$else}
   _PREFIX = ''; // other POSIX systems don't haveany trailing underscore
   {$endif OSDARWIN}
-  {$endif OSWINDOWS}
+  {$endif MSWINDOWS}
   {$IFDEF CPUX86}
       {$L 'Bin32/Decoder.obj'}
       {$L 'Bin32/DecoderData.obj'}
@@ -82,7 +85,6 @@ const
     {$IFDEF FPC}
       {$LinkLib libZydis.a}
       {$LinkLib libZycore.a}
-
     {$ELSE}
       {$L 'Bin64/Decoder.obj'}
       {$L 'Bin64/DecoderData.obj'}
@@ -96,7 +98,7 @@ const
       {$L 'Bin64/Zydis.obj'}
     {$ENDIF}
   {$ENDIF}
-  {$ENDIF}
+{$ENDIF}
 
 
 
@@ -336,12 +338,15 @@ function ZydisVersionBuild(Version: ZyanU64): ZyanU16; inline;
 
 implementation
 
-function memset(dest: Pointer; val: integer; Count: PtrInt): Pointer; cdecl;
+{$IfDef FPC}
+  function memset(dest: Pointer; val: integer; Count: PtrInt): Pointer; cdecl;
   {$ifdef FPC}public name _PREFIX + 'memset';{$endif}
 begin
   FillChar(dest^, Count, val);
   Result := dest;
 end;
+{$EndIf}
+
 
 // -------------------------------------------------------------------------- *}
 // Zydis Version Utils Functions

@@ -188,7 +188,7 @@ type
     { The number formats for all numeric bases. }
     { Index 0 = prefix }
     { Index 1 = suffix }
-    number_format: array[0..ZYDIS_NUMERIC_BASE_MAX_VALUE + 1, 0..1] of record
+    number_format: array[0..Ord(ZYDIS_NUMERIC_BASE_MAX_VALUE) + 1, 0..1] of record
       { A pointer to the ZyanStringView to use as prefix/suffix. }
       string_: PZyanStringView;
       { The ZyanStringView to use as prefix/suffix. }

@@ -5,7 +5,7 @@ type
 
   uint16_t = word;
   uint32_t = dword;
-  uint64_t = qword;
+  uint64_t = UInt64;
   int_least8_t = AnsiChar;
   int_least16_t = smallint;
   int_least32_t = longint;
@@ -13,7 +13,7 @@ type
   uint_least8_t = byte;
   uint_least16_t = word;
   uint_least32_t = dword;
-  uint_least64_t = qword;
+  uint_least64_t = UInt64;
 
   int_fast8_t = shortint;
   int_fast16_t = longint;
@@ -23,12 +23,12 @@ type
 
   uint_fast16_t = dword;
   uint_fast32_t = dword;
-  uint_fast64_t = qword;
+  uint_fast64_t = UInt64;
 
   intptr_t = longint;
   uintptr_t = dword;
   intmax_t = Int64;
-  uintmax_t = QWord;
+  uintmax_t = UInt64;
 
 const
   INT8_MIN = -(128);
@@ -82,7 +82,7 @@ const
 
   INTMAX_MIN            = Int64(-Int64(9223372036854775807)-1);
   INTMAX_MAX            = Int64(9223372036854775807);
-  UINTMAX_MAX           = QWord(-1);
+  UINTMAX_MAX           = UInt64(-1);
 
   PTRDIFF_MIN = (-(2147483647)) - 1;
   PTRDIFF_MAX = 2147483647;

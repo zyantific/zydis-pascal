@@ -63,7 +63,7 @@ implementation
 }
 function ZYAN_MAKE_STATUS(error, module, code : ZyanU32): ZyanStatus;
 begin
-  Result := ZyanStatus((((error) and 01) << 31) or (((module) and $7FF) shl 20) or
+  Result := ZyanStatus((((error) and 01) shl 31) or (((module) and $7FF) shl 20) or
   ((code) and $FFFFF));
 end;
 
