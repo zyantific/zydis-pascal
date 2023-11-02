@@ -41,7 +41,7 @@ uses
 
 
 {$IFNDEF FPC}
-  {$DEFINE Z_DYN_LINK}
+  {.$DEFINE Z_DYN_LINK}
 {$ENDIF}
 
 {$IFDEF Z_DYN_LINK}
@@ -70,32 +70,48 @@ const
   {$endif OSDARWIN}
   {$endif MSWINDOWS}
   {$IFDEF CPUX86}
-      {$L 'Bin32/Decoder.obj'}
-      {$L 'Bin32/DecoderData.obj'}
-      {$L 'Bin32/Formatter.obj'}
-      {$L 'Bin32/MetaInfo.obj'}
-      {$L 'Bin32/Mnemonic.obj'}
-      {$L 'Bin32/Register.obj'}
-      {$L 'Bin32/SharedData.obj'}
-      {$L 'Bin32/String.obj'}
-      {$L 'Bin32/Utils.obj'}
-      {$L 'Bin32/Zydis.obj'}
+      {$L 'x32/Decoder.obj'}
+      {$L 'x32/Disassembler.obj'}
+      {$L 'x32/Encoder.obj'}
+      {$L 'x32/EncoderData.obj'}
+      {$L 'x32/DecoderData.obj'}
+      {$L 'x32/Formatter.obj'}
+      {$L 'x32/FormatterATT.obj'}
+      {$L 'x32/FormatterBase.obj'}
+      {$L 'x32/FormatterBuffer.obj'}
+      {$L 'x32/FormatterIntel.obj'}
+      {$L 'x32/MetaInfo.obj'}
+      {$L 'x32/Mnemonic.obj'}
+      {$L 'x32/Register.obj'}
+      {$L 'x32/Segment.obj'}
+      {$L 'x32/SharedData.obj'}
+      {$L 'x32/String.obj'}
+      {$L 'x32/Utils.obj'}
+      {$L 'x32/Zydis.obj'}
   {$ENDIF}
   {$IFDEF CPUX64}
     {$IFDEF FPC}
       {$LinkLib libZydis.a}
       {$LinkLib libZycore.a}
     {$ELSE}
-      {$L 'Bin64/Decoder.obj'}
-      {$L 'Bin64/DecoderData.obj'}
-      {$L 'Bin64/Formatter.obj'}
-      {$L 'Bin64/MetaInfo.obj'}
-      {$L 'Bin64/Mnemonic.obj'}
-      {$L 'Bin64/Register.obj'}
-      {$L 'Bin64/SharedData.obj'}
-      {$L 'Bin64/String.obj'}
-      {$L 'Bin64/Utils.obj'}
-      {$L 'Bin64/Zydis.obj'}
+      {$L 'x64/Decoder.obj'}
+      {$L 'x64/Disassembler.obj'}
+      {$L 'x64/Encoder.obj'}
+      {$L 'x64/EncoderData.obj'}
+      {$L 'x64/DecoderData.obj'}
+      {$L 'x64/Formatter.obj'}
+      {$L 'x64/FormatterATT.obj'}
+      {$L 'x64/FormatterBase.obj'}
+      {$L 'x64/FormatterBuffer.obj'}
+      {$L 'x64/FormatterIntel.obj'}
+      {$L 'x64/MetaInfo.obj'}
+      {$L 'x64/Mnemonic.obj'}
+      {$L 'x64/Register.obj'}
+      {$L 'x64/Segment.obj'}
+      {$L 'x64/SharedData.obj'}
+      {$L 'x64/String.obj'}
+      {$L 'x64/Utils.obj'}
+      {$L 'x64/Zydis.obj'}
     {$ENDIF}
   {$ENDIF}
 {$ENDIF}
@@ -201,8 +217,61 @@ function ZydisDecoderDecodeFull(const decoder: PZydisDecoder; const buffer: Poin
   Name _PREFIX + 'ZydisDecoderDecodeFull';
 
 
+{**
+ * Decodes the instruction in the given input `buffer`.
+ *
+ * @param   decoder     A pointer to the `ZydisDecoder` instance.
+ * @param   context     A pointer to a decoder context struct which is required for further
+ *                      decoding (e.g. operand decoding using `ZydisDecoderDecodeOperands`) or
+ *                      `ZYAN_NULL` if not needed.
+ * @param   buffer      A pointer to the input buffer.
+ * @param   length      The length of the input buffer. Note that this can be bigger than the
+ *                      actual size of the instruction -- you don't have to know the size up
+ *                      front. This length is merely used to prevent Zydis from doing
+ *                      out-of-bounds reads on your buffer.
+ * @param   instruction A pointer to the `ZydisDecodedInstruction` struct, that receives the
+ *                      details about the decoded instruction.
+ *
+ * @return  A zyan status code.
+ *}
+function ZydisDecoderDecodeInstruction(const decoder: PZydisDecoder;
+  context: PZydisDecoderContext; const buffer: Pointer; length: ZyanUSize;
+  instruction: PZydisDecodedInstruction): ZyanStatus; cdecl; external
+  {$IFDEF Z_DYN_LINK}Z_LIB_NAME{$ENDIF}
+  Name _PREFIX + 'ZydisDecoderDecodeInstruction';
 
 
+{**
+ * Decodes the instruction operands.
+ *
+ * @param   decoder         A pointer to the `ZydisDecoder` instance.
+ * @param   context         A pointer to the `ZydisDecoderContext` struct.
+ * @param   instruction     A pointer to the `ZydisDecodedInstruction` struct.
+ * @param   operands        The array that receives the decoded operands.
+ *                          Refer to `ZYDIS_MAX_OPERAND_COUNT` or `ZYDIS_MAX_OPERAND_COUNT_VISIBLE`
+ *                          when allocating space for the array to ensure that the buffer size is
+ *                          sufficient to always fit all instruction operands.
+ *                          Refer to `instruction.operand_count` or
+ *                          `instruction.operand_count_visible' when allocating space for the array
+ *                          to ensure that the buffer size is sufficient to fit all operands of
+ *                          the given instruction.
+ * @param   operand_count   The length of the `operands` array.
+ *                          This argument as well limits the maximum amount of operands to decode.
+ *                          If this value is `0`, no operands will be decoded and `ZYAN_NULL` will
+ *                          be accepted for the `operands` argument.
+ *
+ * This function fails, if `operand_count` is larger than the total number of operands for the
+ * given instruction (`instruction.operand_count`).
+ *
+ * This function is not available in MINIMAL_MODE.
+ *
+ * @return  A `ZyanStatus` code.
+ *}
+function ZydisDecoderDecodeOperands(const decoder: PZydisDecoder;
+  const context: PZydisDecoderContext; const instruction: PZydisDecodedInstruction;
+  operands: PZydisDecodedOperand; operand_count: ZyanU8): ZyanStatus; cdecl; external
+  {$IFDEF Z_DYN_LINK}Z_LIB_NAME{$ENDIF}
+  Name _PREFIX + 'ZydisDecoderDecodeOperands';
 
 // -------------------------------------------------------------------------- *}
 // Zydis Formatter APIs
@@ -338,15 +407,121 @@ function ZydisVersionBuild(Version: ZyanU64): ZyanU16; inline;
 
 implementation
 
-{$IfDef FPC}
-  function memset(dest: Pointer; val: integer; Count: PtrInt): Pointer; cdecl;
+{$IFDEF CPUX86}
+function _memset(dest: Pointer; val: integer; Count: IntPtr): Pointer; cdecl;
   {$ifdef FPC}public name _PREFIX + 'memset';{$endif}
 begin
   FillChar(dest^, Count, val);
   Result := dest;
 end;
-{$EndIf}
 
+procedure _memcpy(destination: Pointer; const source: Pointer; num: NativeUInt); cdecl;
+begin
+  Move(source^, destination^, num);
+end;
+{$ELSE}
+function memset(dest: Pointer; val: integer; Count: IntPtr): Pointer; cdecl;
+  {$ifdef FPC}public name _PREFIX + 'memset';{$endif}
+begin
+  FillChar(dest^, Count, val);
+  Result := dest;
+end;
+{$IFNDEF FPC}
+procedure memcpy(destination: Pointer; const source: Pointer; num: NativeUInt); cdecl;
+begin
+  Move(source^, destination^, num);
+end;
+{$ENDIF}
+{$ENDIF}
+
+{$IFDEF CPUX86}
+{$IFNDEF FPC}
+procedure __allmul(); assembler;
+asm
+  push    ebx
+
+  mov     eax, dword ptr [esp + 8  + 4]
+  mov     ecx, dword ptr [esp + 16 + 0]
+  mul     ecx             //eax has AHI, ecx has BLO, so AHI * BLO
+  mov     ebx,eax         //save result
+
+  mov     eax, dword ptr [esp + 8 + 0]
+  mul     dword ptr [esp + 16 + 4]    //ALO * BHI
+  add     ebx,eax                     //ebx = ((ALO * BHI) + (AHI * BLO))
+
+  mov     eax,dword ptr [esp + 8 + 0]  //ecx = BLO
+  mul     ecx                          //so edx:eax = ALO*BLO
+  add     edx,ebx                      //now edx has all the LO*HI stuff
+
+  pop     ebx
+
+  ret     16              // callee restores the stack
+end;
+
+procedure __allshr(); assembler;
+asm
+// Handle shifts of 64 bits or more (if shifting 64 bits or more, the result
+// depends only on the high order bit of edx).
+
+        cmp     cl,64
+        jae     @RETSIGN
+
+// Handle shifts of between 0 and 31 bits
+
+        cmp     cl, 32
+        jae     @MORE32
+        shrd    eax,edx,cl
+        sar     edx,cl
+        ret
+
+// Handle shifts of between 32 and 63 bits
+
+@MORE32:
+        mov     eax,edx
+        sar     edx,31
+        and     cl,31
+        sar     eax,cl
+        ret
+
+// Return double precision 0 or -1, depending on the sign of edx
+
+@RETSIGN:
+        sar     edx,31
+        mov     eax,edx
+        ret
+  ret
+end;
+
+procedure __aullshr(); assembler;
+asm
+        cmp     cl,64
+        jae     @RETZERO
+
+// Handle shifts of between 0 and 31 bits
+        cmp     cl, 32
+        jae     @MORE32
+        shrd    eax,edx,cl
+        shr     edx,cl
+        ret
+
+// Handle shifts of between 32 and 63 bits
+
+@MORE32:
+        mov     eax,edx
+        xor     edx,edx
+        and     cl,31
+        shr     eax,cl
+        ret
+
+// return 0 in edx:eax
+
+@RETZERO:
+        xor     eax,eax
+        xor     edx,edx
+        ret
+end;
+{$ENDIF}
+{$ENDIF}
 
 // -------------------------------------------------------------------------- *}
 // Zydis Version Utils Functions

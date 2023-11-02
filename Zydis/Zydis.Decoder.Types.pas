@@ -405,6 +405,64 @@ type
   end; // TZydisDecoder
   PZydisDecoder = ^TZydisDecoder;
 
+
+  TZydisDecoderContext = record
+    // A pointer to the internal instruction definition.
+    definition: Pointer;
+    // Contains the effective operand-size index.
+    // 0 = 16 bit, 1 = 32 bit, 2 = 64 bit
+    eosz_index: ZyanU8;
+    // Contains the effective address-size index.
+    // 0 = 16 bit, 1 = 32 bit, 2 = 64 bit
+    easz_index: ZyanU8;
+    // Contains some cached REX/XOP/VEX/EVEX/MVEX values to provide uniform access.
+    vector_unified: record
+      W: ZyanU8;
+      R: ZyanU8;
+      X: ZyanU8;
+      B: ZyanU8;
+      L: ZyanU8;
+      LL: ZyanU8;
+      R2: ZyanU8;
+      V2: ZyanU8;
+      vvvv: ZyanU8;
+      mask: ZyanU8;
+    end;
+    // Information about encoded operand registers.
+    reg_info: record
+      // Signals if the `modrm.mod == 3` or `reg` form is forced for the instruction.
+      is_mod_reg: ZyanBool;
+      // The final register id for the `reg` encoded register.
+      id_reg: ZyanU8;
+      // The final register id for the `rm` encoded register.
+      // This value is only set, if a register is encoded in `modrm.rm`.
+      id_rm: ZyanU8;
+      // The final register id for the `ndsndd` (`.vvvv`) encoded register.
+      id_ndsndd: ZyanU8;
+      // The final register id for the base register.
+      // This value is only set, if a memory operand is encoded in `modrm.rm`.
+      id_base: ZyanU8;
+      // The final register id for the index register.
+      // This value is only set, if a memory operand is encoded in `modrm.rm` and the `SIB` byte is present.
+      id_index: ZyanU8;
+    end;
+    // Internal EVEX-specific information.
+    evex: record
+      // The EVEX tuple-type.
+      tuple_type: ZyanU8;
+      // The EVEX element-size.
+      element_size: ZyanU8;
+    end;
+    // Internal MVEX-specific information.
+    mvex: record
+      // The MVEX functionality.
+      functionality: ZyanU8;
+    end;
+    // The scale factor for EVEX/MVEX compressed 8-bit displacement values.
+    cd8_scale: ZyanU8; // TODO: Could make sense to expose this in the ZydisDecodedInstruction
+  end;
+  PZydisDecoderContext = TZydisDecoderContext;
+
 implementation
 
 end.
