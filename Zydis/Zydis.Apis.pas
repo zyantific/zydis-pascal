@@ -33,7 +33,6 @@ interface
 uses
   Zydis.Enums,
   Zydis.Types,
-  Zydis.Decoder,
   Zydis.Encoder.Types,
   Zydis.Decoder.Types,
   Zydis.Formatter.Types,
