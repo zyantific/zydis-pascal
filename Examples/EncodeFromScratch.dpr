@@ -98,7 +98,6 @@ begin
     Write(Format('%.2X ', [TBytes(buffer)[i]]));
   WriteLn;
 
-  {$IFDEF CPUX64}
   // Align pointer to typical page size.
   aligned := PZyanU8(NativeUInt(buffer) and not (page_size - 1));
 
@@ -119,7 +118,6 @@ begin
     result := func_ptr();
     WriteLn('Return value of JITed code: 0x', IntToHex(result, 16));
   end;
-  {$ENDIF}
   Freemem(buffer);
   ReadLn;
 end.

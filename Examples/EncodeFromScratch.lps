@@ -8,10 +8,9 @@
       <Unit>
         <Filename Value="EncodeFromScratch.dpr"/>
         <IsPartOfProject Value="True"/>
-        <IsVisibleTab Value="True"/>
-        <TopLine Value="88"/>
+        <TopLine Value="5"/>
         <CursorPos X="19" Y="5"/>
-        <UsageCount Value="29"/>
+        <UsageCount Value="31"/>
         <Loaded Value="True"/>
       </Unit>
       <Unit>
@@ -20,7 +19,7 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="36"/>
         <CursorPos X="28" Y="48"/>
-        <UsageCount Value="28"/>
+        <UsageCount Value="30"/>
       </Unit>
       <Unit>
         <Filename Value="F:\FPCross\fpcsrc\rtl\inc\systemh.inc"/>
@@ -66,10 +65,13 @@
       </Unit>
       <Unit>
         <Filename Value="..\Zydis\Zydis.Apis.pas"/>
-        <EditorIndex Value="-1"/>
-        <TopLine Value="263"/>
-        <CursorPos X="19" Y="268"/>
-        <UsageCount Value="12"/>
+        <IsVisibleTab Value="True"/>
+        <EditorIndex Value="1"/>
+        <TopLine Value="413"/>
+        <CursorPos Y="423"/>
+        <FoldState Value=" T3r70K2 PiGiD0\"/>
+        <UsageCount Value="13"/>
+        <Loaded Value="True"/>
       </Unit>
       <Unit>
         <Filename Value="..\Zydis\Zydis.Enums.pas"/>
@@ -85,8 +87,15 @@
         <CursorPos X="68" Y="110"/>
         <UsageCount Value="10"/>
       </Unit>
+      <Unit>
+        <Filename Value="F:\FPCross\fpcsrc\rtl\win\sysutils.pp"/>
+        <UnitName Value="SysUtils"/>
+        <EditorIndex Value="2"/>
+        <UsageCount Value="11"/>
+        <Loaded Value="True"/>
+      </Unit>
     </Units>
-    <JumpHistory HistoryIndex="23">
+    <JumpHistory HistoryIndex="24">
       <Position>
         <Filename Value="EncodeFromScratch.dpr"/>
         <Caret Line="88" TopLine="71"/>
@@ -182,6 +191,10 @@
       <Position>
         <Filename Value="EncodeFromScratch.dpr"/>
         <Caret Column="26"/>
+      </Position>
+      <Position>
+        <Filename Value="EncodeFromScratch.dpr"/>
+        <Caret Line="5" Column="19" TopLine="5"/>
       </Position>
     </JumpHistory>
     <RunParams>

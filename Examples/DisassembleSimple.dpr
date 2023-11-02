@@ -12,9 +12,9 @@ program DisassembleSimple;
 
 uses
   SysUtils,
-  Zydis.apis,
-  Zydis.enums,
-  Zydis.types,
+  Zydis.Apis,
+  Zydis.Enums,
+  Zydis.Types,
   Zydis.Status,
   Zydis.Disassembler.Types;
 
