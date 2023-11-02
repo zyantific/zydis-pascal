@@ -104,6 +104,13 @@ begin
   { Only Enable for Dynamic linked Zydis library cuz it needs libc }
   //ExpectSuccess(ZyanMemoryVirtualProtect(aligned, alloc_size, ZYAN_PAGE_EXECUTE_READWRITE));
 
+  {
+    On 32bit the code will be
+    dec eax
+    mov eax,1337
+    ret
+  }
+
   // Re-protect the heap region as RWX. Don't do this at home, kids!
   {$IfDef UNIX}
   if Fpmprotect(aligned, alloc_size, PROT_EXEC or PROT_READ or PROT_WRITE) = 0 then
