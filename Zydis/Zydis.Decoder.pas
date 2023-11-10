@@ -22,7 +22,7 @@
 
 *******************************************************************************}
 {
-  This unit will contain the high-level implementation for Decoder
+  This unit will contain the high-level implementation for Disassembler
 }
 unit Zydis.Decoder;
 
