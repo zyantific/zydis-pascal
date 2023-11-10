@@ -22,9 +22,9 @@
 
 *******************************************************************************}
 {
-  This unit will contain the high-level implementation for Disassembler
+  This unit will contain the high-level implementation for Encoder
 }
-unit Zydis.Disassembler;
+unit Zydis.Encoder;
 
 {$IFDEF FPC}
   {$mode Delphi}
@@ -36,8 +36,7 @@ interface
 uses
   Zydis.Enums,
   Zydis.Types,
-  Zydis.Decoder.Types,
-  Zydis.Disassembler.Types;
+  Zydis.Encoder.Types;
 
 implementation
 
