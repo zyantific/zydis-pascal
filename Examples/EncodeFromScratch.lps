@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CONFIG>
+  <ProjectSession>
+    <PathDelim Value="\"/>
+    <Version Value="12"/>
+    <BuildModes Active="Windows_Release64"/>
+    <Units>
+      <Unit>
+        <Filename Value="EncodeFromScratch.dpr"/>
+        <IsPartOfProject Value="True"/>
+        <TopLine Value="5"/>
+        <CursorPos X="19" Y="5"/>
+        <UsageCount Value="31"/>
+        <Loaded Value="True"/>
+      </Unit>
+      <Unit>
+        <Filename Value="..\Zydis\Zydis.Encoder.Types.pas"/>
+        <IsPartOfProject Value="True"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="36"/>
+        <CursorPos X="28" Y="48"/>
+        <UsageCount Value="30"/>
+      </Unit>
+      <Unit>
+        <Filename Value="F:\FPCross\fpcsrc\rtl\inc\systemh.inc"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="522"/>
+        <CursorPos X="20" Y="539"/>
+        <UsageCount Value="12"/>
+      </Unit>
+      <Unit>
+        <Filename Value="..\Zydis\Zydis.Types.pas"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="55"/>
+        <CursorPos X="5" Y="34"/>
+        <UsageCount Value="13"/>
+      </Unit>
+      <Unit>
+        <Filename Value="..\Zydis\Zydis.Status.pas"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="32"/>
+        <CursorPos X="53" Y="49"/>
+        <UsageCount Value="10"/>
+      </Unit>
+      <Unit>
+        <Filename Value="..\Zydis\Zydis.Disassembler.Types.pas"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="16"/>
+        <CursorPos Y="34"/>
+        <UsageCount Value="10"/>
+      </Unit>
+      <Unit>
+        <Filename Value="..\Zydis\Generated\zydis_enums.inc"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="2919"/>
+        <CursorPos Y="2934"/>
+        <UsageCount Value="12"/>
+      </Unit>
+      <Unit>
+        <Filename Value="..\Zydis\Zydis.Decoder.Types.pas"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="271"/>
+        <CursorPos Y="282"/>
+        <UsageCount Value="12"/>
+      </Unit>
+      <Unit>
+        <Filename Value="..\Zydis\Zydis.Apis.pas"/>
+        <IsVisibleTab Value="True"/>
+        <EditorIndex Value="1"/>
+        <TopLine Value="413"/>
+        <CursorPos Y="423"/>
+        <FoldState Value=" T3r70K2 PiGiD0\"/>
+        <UsageCount Value="13"/>
+        <Loaded Value="True"/>
+      </Unit>
+      <Unit>
+        <Filename Value="..\Zydis\Zydis.Enums.pas"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="39"/>
+        <CursorPos X="13" Y="43"/>
+        <UsageCount Value="13"/>
+      </Unit>
+      <Unit>
+        <Filename Value="F:\FPCross\fpcsrc\rtl\unix\bunxh.inc"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="93"/>
+        <CursorPos X="68" Y="110"/>
+        <UsageCount Value="10"/>
+      </Unit>
+      <Unit>
+        <Filename Value="F:\FPCross\fpcsrc\rtl\win\sysutils.pp"/>
+        <UnitName Value="SysUtils"/>
+        <EditorIndex Value="2"/>
+        <UsageCount Value="11"/>
+        <Loaded Value="True"/>
+      </Unit>
+    </Units>
+    <JumpHistory HistoryIndex="24">
+      <Position>
+        <Filename Value="EncodeFromScratch.dpr"/>
+        <Caret Line="88" TopLine="71"/>
+      </Position>
+      <Position>
+        <Filename Value="EncodeFromScratch.dpr"/>
+        <Caret Line="90" TopLine="71"/>
+      </Position>
+      <Position>
+        <Filename Value="EncodeFromScratch.dpr"/>
+        <Caret Line="89" Column="65" TopLine="76"/>
+      </Position>
+      <Position>
+        <Filename Value="EncodeFromScratch.dpr"/>
+        <Caret Line="24" Column="61" TopLine="12"/>
+      </Position>
+      <Position>
+        <Filename Value="EncodeFromScratch.dpr"/>
+        <Caret Line="92" Column="37" TopLine="77"/>
+      </Position>
+      <Position>
+        <Filename Value="EncodeFromScratch.dpr"/>
+        <Caret Line="100" Column="66" TopLine="81"/>
+      </Position>
+      <Position>
+        <Filename Value="EncodeFromScratch.dpr"/>
+        <Caret Line="78" Column="25" TopLine="72"/>
+      </Position>
+      <Position>
+        <Filename Value="EncodeFromScratch.dpr"/>
+        <Caret Line="108" Column="9" TopLine="86"/>
+      </Position>
+      <Position>
+        <Filename Value="EncodeFromScratch.dpr"/>
+        <Caret Line="98" TopLine="86"/>
+      </Position>
+      <Position>
+        <Filename Value="EncodeFromScratch.dpr"/>
+        <Caret Line="33" TopLine="18"/>
+      </Position>
+      <Position>
+        <Filename Value="EncodeFromScratch.dpr"/>
+        <Caret Line="98" TopLine="83"/>
+      </Position>
+      <Position>
+        <Filename Value="EncodeFromScratch.dpr"/>
+        <Caret Line="104" TopLine="86"/>
+      </Position>
+      <Position>
+        <Filename Value="EncodeFromScratch.dpr"/>
+        <Caret Line="107" Column="45" TopLine="86"/>
+      </Position>
+      <Position>
+        <Filename Value="EncodeFromScratch.dpr"/>
+        <Caret Line="110" TopLine="86"/>
+      </Position>
+      <Position>
+        <Filename Value="EncodeFromScratch.dpr"/>
+        <Caret Line="111" TopLine="86"/>
+      </Position>
+      <Position>
+        <Filename Value="EncodeFromScratch.dpr"/>
+        <Caret Line="98" TopLine="86"/>
+      </Position>
+      <Position>
+        <Filename Value="EncodeFromScratch.dpr"/>
+        <Caret Line="96" Column="43" TopLine="89"/>
+      </Position>
+      <Position>
+        <Filename Value="EncodeFromScratch.dpr"/>
+        <Caret Line="102" Column="53" TopLine="89"/>
+      </Position>
+      <Position>
+        <Filename Value="EncodeFromScratch.dpr"/>
+        <Caret Line="87" Column="9" TopLine="79"/>
+      </Position>
+      <Position>
+        <Filename Value="EncodeFromScratch.dpr"/>
+        <Caret Line="101" Column="43" TopLine="79"/>
+      </Position>
+      <Position>
+        <Filename Value="EncodeFromScratch.dpr"/>
+        <Caret Line="100" Column="32" TopLine="86"/>
+      </Position>
+      <Position>
+        <Filename Value="EncodeFromScratch.dpr"/>
+        <Caret Line="100" Column="65" TopLine="86"/>
+      </Position>
+      <Position>
+        <Filename Value="EncodeFromScratch.dpr"/>
+        <Caret Line="104" Column="41" TopLine="86"/>
+      </Position>
+      <Position>
+        <Filename Value="EncodeFromScratch.dpr"/>
+        <Caret Column="26"/>
+      </Position>
+      <Position>
+        <Filename Value="EncodeFromScratch.dpr"/>
+        <Caret Line="5" Column="19" TopLine="5"/>
+      </Position>
+    </JumpHistory>
+    <RunParams>
+      <FormatVersion Value="2"/>
+      <Modes ActiveMode=""/>
+    </RunParams>
+  </ProjectSession>
+</CONFIG>

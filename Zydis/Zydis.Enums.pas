@@ -21,26 +21,49 @@
  * SOFTWARE.
 
 *******************************************************************************}
-{
-  This unit will contain the high-level implementation for Formatter
-}
-unit Zydis.Formatter;
 
-{$IFDEF FPC}
-  {$MODE DELPHI}
+unit Zydis.Enums;
+
+{$IfDef FPC}
+  {$mode delphi}
   {$PackRecords C}
+  {$PACKENUM 4}
+  {$WARN 3031 off : Values in enumeration types have to be ascending}
+{$ELSE}
+  {$MinEnumSize 4}
+  {$Z4}
 {$ENDIF}
 
 interface
-
 uses
-  Zydis.Enums,
-  Zydis.Types,
-  Zycore.Strings,
-  Zycore.FormatterBuffer,
-  Zydis.Decoder.Types;
+  {$IfDef UNIX}
+  BaseUnix
+  {$Else}
+  Windows
+  {$EndIf};
+
+{$I Generated/zydis_enums.inc}
+
+{
+  Defines the `TZyanMemoryPageProtection` enum.
+}
+type
+  TZyanMemoryPageProtection = (
+    {$IFDEF MSWINDOWS}
+    ZYAN_PAGE_READONLY = PAGE_READONLY,
+    ZYAN_PAGE_READWRITE = PAGE_READWRITE,
+    ZYAN_PAGE_EXECUTE = PAGE_EXECUTE,
+    ZYAN_PAGE_EXECUTE_READ = PAGE_EXECUTE_READ,
+    ZYAN_PAGE_EXECUTE_READWRITE = PAGE_EXECUTE_READWRITE
+    {$ENDIF}
+    {$IFDEF UNIX}
+    ZYAN_PAGE_READONLY = PROT_READ,
+    ZYAN_PAGE_READWRITE = PROT_READ or PROT_WRITE,
+    ZYAN_PAGE_EXECUTE = PROT_EXEC,
+    ZYAN_PAGE_EXECUTE_READ = PROT_EXEC or PROT_READ,
+    ZYAN_PAGE_EXECUTE_READWRITE = PROT_EXEC or PROT_READ or PROT_WRITE
+    {$ENDIF}
+  );
 
 implementation
-
 end.
-

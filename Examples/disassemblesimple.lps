@@ -1,0 +1,322 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CONFIG>
+  <ProjectSession>
+    <PathDelim Value="\"/>
+    <Version Value="12"/>
+    <BuildModes Active="Linux_Release_64"/>
+    <Units>
+      <Unit>
+        <Filename Value="DisassembleSimple.dpr"/>
+        <IsPartOfProject Value="True"/>
+        <IsVisibleTab Value="True"/>
+        <TopLine Value="16"/>
+        <CursorPos Y="46"/>
+        <UsageCount Value="122"/>
+        <Loaded Value="True"/>
+      </Unit>
+      <Unit>
+        <Filename Value="..\Zydis\Zydis.Disassembler.pas"/>
+        <IsPartOfProject Value="True"/>
+        <EditorIndex Value="-1"/>
+        <CursorPos Y="2"/>
+        <UsageCount Value="122"/>
+      </Unit>
+      <Unit>
+        <Filename Value="..\Zydis\Zydis.Decoder.Types.pas"/>
+        <IsPartOfProject Value="True"/>
+        <EditorIndex Value="-1"/>
+        <CursorPos X="7" Y="310"/>
+        <UsageCount Value="66"/>
+      </Unit>
+      <Unit>
+        <Filename Value="..\Zydis\Zydis.Status.pas"/>
+        <IsPartOfProject Value="True"/>
+        <EditorIndex Value="-1"/>
+        <CursorPos X="17" Y="28"/>
+        <UsageCount Value="46"/>
+      </Unit>
+      <Unit>
+        <Filename Value="..\Zydis\Zydis.Decoder.pas"/>
+        <IsPartOfProject Value="True"/>
+        <EditorIndex Value="-1"/>
+        <CursorPos X="81" Y="23"/>
+        <UsageCount Value="24"/>
+      </Unit>
+      <Unit>
+        <Filename Value="..\Zydis\Zydis.sharedtypes.pas"/>
+        <UnitName Value="Zydis.SharedTypes"/>
+        <EditorIndex Value="-1"/>
+        <UsageCount Value="42"/>
+        <DefaultSyntaxHighlighter Value="Delphi"/>
+      </Unit>
+      <Unit>
+        <Filename Value="..\Zydis\Zydis.bind.pas"/>
+        <EditorIndex Value="-1"/>
+        <CursorPos X="26" Y="11"/>
+        <UsageCount Value="30"/>
+        <DefaultSyntaxHighlighter Value="Delphi"/>
+      </Unit>
+      <Unit>
+        <Filename Value="..\Zydis\Generated\Zydis_bind.inc"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="3176"/>
+        <UsageCount Value="29"/>
+        <DefaultSyntaxHighlighter Value="Delphi"/>
+      </Unit>
+      <Unit>
+        <Filename Value="..\Zydis\Zydis.Types.pas"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="46"/>
+        <CursorPos X="13" Y="35"/>
+        <UsageCount Value="60"/>
+      </Unit>
+      <Unit>
+        <Filename Value="F:\FPCross\fpcsrc\rtl\inc\ctypes.pp"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="43"/>
+        <UsageCount Value="1"/>
+      </Unit>
+      <Unit>
+        <Filename Value="F:\FPCross\fpcsrc\packages\numlib\src\int.pas"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="100"/>
+        <UsageCount Value="1"/>
+      </Unit>
+      <Unit>
+        <Filename Value="F:\FPCross\fpcsrc\rtl\netwlibc\libc.pp"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="7"/>
+        <CursorPos X="42" Y="14"/>
+        <UsageCount Value="1"/>
+      </Unit>
+      <Unit>
+        <Filename Value="..\Zydis\stdinth.inc"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="70"/>
+        <CursorPos X="33" Y="85"/>
+        <UsageCount Value="10"/>
+      </Unit>
+      <Unit>
+        <Filename Value="..\Zydis\Zydis.pas"/>
+        <EditorIndex Value="-1"/>
+        <CursorPos X="17" Y="28"/>
+        <UsageCount Value="53"/>
+        <DefaultSyntaxHighlighter Value="Delphi"/>
+      </Unit>
+      <Unit>
+        <Filename Value="..\Zydis\Generated\Zydis_enums.inc"/>
+        <EditorIndex Value="-1"/>
+        <CursorPos Y="6"/>
+        <UsageCount Value="22"/>
+        <DefaultSyntaxHighlighter Value="Delphi"/>
+      </Unit>
+      <Unit>
+        <Filename Value="..\Zydis\Zydis.Enums.pas"/>
+        <EditorIndex Value="-1"/>
+        <UsageCount Value="31"/>
+      </Unit>
+      <Unit>
+        <Filename Value="F:\FPCross\fpcsrc\rtl\inc\systemh.inc"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="107"/>
+        <CursorPos X="3" Y="121"/>
+        <UsageCount Value="10"/>
+      </Unit>
+      <Unit>
+        <Filename Value="F:\FPCross\fpcsrc\rtl\inc\ustringh.inc"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="137"/>
+        <CursorPos X="22" Y="149"/>
+        <UsageCount Value="10"/>
+      </Unit>
+      <Unit>
+        <Filename Value="..\Zydis\Zydis.Exception.pas"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="23"/>
+        <UsageCount Value="9"/>
+        <DefaultSyntaxHighlighter Value="Delphi"/>
+      </Unit>
+      <Unit>
+        <Filename Value="..\Zydis\Zydis.Formatter.pas"/>
+        <EditorIndex Value="-1"/>
+        <CursorPos X="81" Y="23"/>
+        <UsageCount Value="12"/>
+      </Unit>
+      <Unit>
+        <Filename Value="..\..\Zydis-pascal\Zydis\Zydis.bind.pas"/>
+        <EditorIndex Value="-1"/>
+        <UsageCount Value="9"/>
+        <DefaultSyntaxHighlighter Value="Delphi"/>
+      </Unit>
+      <Unit>
+        <Filename Value="..\..\Zydis-pascal\Zydis\Zydis.Decoder.pas"/>
+        <EditorIndex Value="-1"/>
+        <UsageCount Value="9"/>
+        <DefaultSyntaxHighlighter Value="Delphi"/>
+      </Unit>
+      <Unit>
+        <Filename Value="..\..\Zydis-pascal\Zydis\Zydis.Exception.pas"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="4"/>
+        <UsageCount Value="9"/>
+        <DefaultSyntaxHighlighter Value="Delphi"/>
+      </Unit>
+      <Unit>
+        <Filename Value="..\..\Zydis-pascal\Zydis\Zydis.Formatter.pas"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="28"/>
+        <UsageCount Value="9"/>
+        <DefaultSyntaxHighlighter Value="Delphi"/>
+      </Unit>
+      <Unit>
+        <Filename Value="..\..\Zydis-pascal\Zydis\Zydis.pas"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="16"/>
+        <CursorPos X="3" Y="34"/>
+        <UsageCount Value="9"/>
+        <DefaultSyntaxHighlighter Value="Delphi"/>
+      </Unit>
+      <Unit>
+        <Filename Value="..\Zydis\Zycore.Allocator.pas"/>
+        <EditorIndex Value="-1"/>
+        <CursorPos X="81" Y="23"/>
+        <UsageCount Value="12"/>
+      </Unit>
+      <Unit>
+        <Filename Value="..\Zydis\Zycore.FormatterBuffer.pas"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="27"/>
+        <CursorPos X="81" Y="23"/>
+        <UsageCount Value="12"/>
+      </Unit>
+      <Unit>
+        <Filename Value="..\Zydis\Zycore.Strings.pas"/>
+        <EditorIndex Value="-1"/>
+        <CursorPos X="81" Y="23"/>
+        <UsageCount Value="12"/>
+      </Unit>
+      <Unit>
+        <Filename Value="..\Zydis\Zycore.Vector.pas"/>
+        <EditorIndex Value="-1"/>
+        <CursorPos X="81" Y="23"/>
+        <UsageCount Value="12"/>
+      </Unit>
+      <Unit>
+        <Filename Value="..\Zydis\Zydis.Apis.pas"/>
+        <EditorIndex Value="1"/>
+        <TopLine Value="411"/>
+        <CursorPos X="8" Y="422"/>
+        <FoldState Value=" TGr90J T3rU0W1 PRY0P"/>
+        <UsageCount Value="12"/>
+        <Loaded Value="True"/>
+      </Unit>
+      <Unit>
+        <Filename Value="..\Zydis\Zydis.Disassembler.Types.pas"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="27"/>
+        <CursorPos X="5" Y="47"/>
+        <UsageCount Value="12"/>
+      </Unit>
+      <Unit>
+        <Filename Value="..\Zydis\Zydis.Formatter.Types.pas"/>
+        <EditorIndex Value="-1"/>
+        <CursorPos X="81" Y="23"/>
+        <UsageCount Value="12"/>
+      </Unit>
+    </Units>
+    <JumpHistory HistoryIndex="21">
+      <Position>
+        <Filename Value="DisassembleSimple.dpr"/>
+        <Caret Line="40" TopLine="12"/>
+      </Position>
+      <Position>
+        <Filename Value="DisassembleSimple.dpr"/>
+        <Caret Line="41" TopLine="12"/>
+      </Position>
+      <Position>
+        <Filename Value="DisassembleSimple.dpr"/>
+        <Caret Line="42" TopLine="12"/>
+      </Position>
+      <Position>
+        <Filename Value="DisassembleSimple.dpr"/>
+        <Caret Line="4" Column="13"/>
+      </Position>
+      <Position>
+        <Filename Value="DisassembleSimple.dpr"/>
+        <Caret Line="15" Column="101"/>
+      </Position>
+      <Position>
+        <Filename Value="DisassembleSimple.dpr"/>
+        <Caret Line="22" Column="12"/>
+      </Position>
+      <Position>
+        <Filename Value="DisassembleSimple.dpr"/>
+        <Caret Line="22" Column="12"/>
+      </Position>
+      <Position>
+        <Filename Value="DisassembleSimple.dpr"/>
+        <Caret Line="5" Column="13"/>
+      </Position>
+      <Position>
+        <Filename Value="DisassembleSimple.dpr"/>
+        <Caret Line="20" Column="3" TopLine="10"/>
+      </Position>
+      <Position>
+        <Filename Value="DisassembleSimple.dpr"/>
+        <Caret Line="28" Column="31" TopLine="15"/>
+      </Position>
+      <Position>
+        <Filename Value="DisassembleSimple.dpr"/>
+        <Caret Line="49" Column="22" TopLine="18"/>
+      </Position>
+      <Position>
+        <Filename Value="DisassembleSimple.dpr"/>
+        <Caret Line="8" Column="35" TopLine="7"/>
+      </Position>
+      <Position>
+        <Filename Value="DisassembleSimple.dpr"/>
+        <Caret Line="15" Column="21" TopLine="6"/>
+      </Position>
+      <Position>
+        <Filename Value="DisassembleSimple.dpr"/>
+        <Caret Line="6" Column="29"/>
+      </Position>
+      <Position>
+        <Filename Value="DisassembleSimple.dpr"/>
+        <Caret Line="15" Column="23"/>
+      </Position>
+      <Position>
+        <Filename Value="DisassembleSimple.dpr"/>
+        <Caret Line="16" Column="3"/>
+      </Position>
+      <Position>
+        <Filename Value="DisassembleSimple.dpr"/>
+        <Caret Line="13" Column="15"/>
+      </Position>
+      <Position>
+        <Filename Value="DisassembleSimple.dpr"/>
+        <Caret Line="37" Column="67" TopLine="17"/>
+      </Position>
+      <Position>
+        <Filename Value="DisassembleSimple.dpr"/>
+        <Caret Line="38" Column="63" TopLine="17"/>
+      </Position>
+      <Position>
+        <Filename Value="DisassembleSimple.dpr"/>
+        <Caret Line="37" Column="63" TopLine="17"/>
+      </Position>
+      <Position>
+        <Filename Value="DisassembleSimple.dpr"/>
+        <Caret Line="11" Column="9"/>
+      </Position>
+      <Position>
+        <Filename Value="DisassembleSimple.dpr"/>
+        <Caret Line="16" Column="18"/>
+      </Position>
+    </JumpHistory>
+    <RunParams>
+      <FormatVersion Value="2"/>
+      <Modes ActiveMode=""/>
+    </RunParams>
+  </ProjectSession>
+</CONFIG>

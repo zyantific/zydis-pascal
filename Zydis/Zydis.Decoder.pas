@@ -1,8 +1,6 @@
-{***************************************************************************************************
+{*******************************************************************************
 
-  Zydis Top Level API
-
-  Original Author : Florian Bernd
+  Zydis Pascal API By Coldzer0
 
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -22,59 +20,24 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
 
-***************************************************************************************************}
-
+*******************************************************************************}
+{
+  This unit will contain the high-level implementation for Disassembler
+}
 unit Zydis.Decoder;
+
+{$IFDEF FPC}
+  {$mode Delphi}{$H+}
+  {$PackRecords C}
+{$ENDIF}
 
 interface
 
-{$IFDEF FPC}
-  {$MODE DELPHI}
-{$ENDIF}
-
 uses
-  {$IFNDEF FPC}System.SysUtils{$ELSE}SysUtils{$ENDIF}, Zydis, Zydis.Exception;
-
-type
-  TZydisDecoder = class sealed(TObject)
-  strict private
-    FContext: Zydis.TZydisDecoder;
-  public
-    procedure EnableMode(Mode: TZydisDecoderMode; Enabled: Boolean); inline;
-    procedure DecodeBuffer(const Buffer: Pointer; Length: ZydisUSize; InstructionPointer: ZydisU64;
-      var Instruction: TZydisDecodedInstruction); inline;
-  public
-    constructor Create(MachineMode: TZydisMachineMode; AddressWidth: TZydisAddressWidth);
-  end;
+  Zydis.Enums,
+  Zydis.Types;
 
 implementation
 
-{ TZydisDecoder }
-
-constructor TZydisDecoder.Create(MachineMode: TZydisMachineMode; AddressWidth: TZydisAddressWidth);
-var
-  Status: TZydisStatus;
-begin
-  inherited Create;
-  Status := ZydisDecoderInit(FContext, MachineMode, AddressWidth);
-  if (not ZydisSuccess(Status)) then TZydisException.RaiseException(Status);
-end;
-
-procedure TZydisDecoder.DecodeBuffer(const Buffer: Pointer; Length: ZydisUSize;
-  InstructionPointer: ZydisU64; var Instruction: TZydisDecodedInstruction);
-var
-  Status: TZydisStatus;
-begin
-  Status := ZydisDecoderDecodeBuffer(@FContext, Buffer, Length, InstructionPointer, Instruction);
-  if (not ZydisSuccess(Status)) then TZydisException.RaiseException(Status);
-end;
-
-procedure TZydisDecoder.EnableMode(Mode: TZydisDecoderMode; Enabled: Boolean);
-var
-  Status: TZydisStatus;
-begin
-  Status := ZydisDecoderEnableMode(FContext, Mode, Enabled);
-  if (not ZydisSuccess(Status)) then TZydisException.RaiseException(Status);
-end;
-
 end.
+

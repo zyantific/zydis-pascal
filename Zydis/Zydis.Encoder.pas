@@ -22,12 +22,12 @@
 
 *******************************************************************************}
 {
-  This unit will contain the high-level implementation for Formatter
+  This unit will contain the high-level implementation for Encoder
 }
-unit Zydis.Formatter;
+unit Zydis.Encoder;
 
 {$IFDEF FPC}
-  {$MODE DELPHI}
+  {$mode Delphi}
   {$PackRecords C}
 {$ENDIF}
 
@@ -36,9 +36,7 @@ interface
 uses
   Zydis.Enums,
   Zydis.Types,
-  Zycore.Strings,
-  Zycore.FormatterBuffer,
-  Zydis.Decoder.Types;
+  Zydis.Encoder.Types;
 
 implementation
 

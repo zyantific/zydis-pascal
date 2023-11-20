@@ -21,13 +21,10 @@
  * SOFTWARE.
 
 *******************************************************************************}
-{
-  This unit will contain the high-level implementation for Formatter
-}
-unit Zydis.Formatter;
+unit Zycore.FormatterBuffer;
 
 {$IFDEF FPC}
-  {$MODE DELPHI}
+  {$mode Delphi}{$H+}{$J-}
   {$PackRecords C}
 {$ENDIF}
 
@@ -36,9 +33,20 @@ interface
 uses
   Zydis.Enums,
   Zydis.Types,
-  Zycore.Strings,
-  Zycore.FormatterBuffer,
-  Zydis.Decoder.Types;
+  Zycore.Strings;
+
+
+Type
+  { Defines the ZydisFormatterBuffer struct. }
+  TZydisFormatterBuffer = record
+    { ZYAN_TRUE, if the buffer contains a token stream or ZYAN_FALSE, if it contains a simple string. }
+    is_token_list: ZyanBool;
+    { The remaining capacity of the buffer. }
+    capacity: ZyanUSize;
+    { The ZyanString instance that refers to the literal value of the most recently added token. }
+    string_: TZyanString;
+  end;
+  PZydisFormatterBuffer = ^TZydisFormatterBuffer;
 
 implementation
 
